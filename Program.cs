@@ -12,6 +12,7 @@
             } while (!ValidName(name));
         }
 
+        //
         static bool ValidName(string nameToTest) {
             return true;
         }
