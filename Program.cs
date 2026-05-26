@@ -10,8 +10,6 @@
                 Console.Write("Enter Name: ");
                 name = Console.ReadLine();
             } while (!ValidName(name));
-
-
         }
 
         static bool ValidName(string nameToTest) {
