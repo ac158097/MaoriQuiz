@@ -16,7 +16,7 @@ namespace MaoriQuiz
 
         static bool ValidName(string nameToTest)
         {
-            Regex nameRegex = new Regex(@"([a-z]* [a-z]*){3,20}", RegexOptions.IgnoreCase);
+            Regex nameRegex = new Regex(@"[a-z]{2,12} [a-z]{2,12}", RegexOptions.IgnoreCase);
             if (nameRegex.Match(nameToTest).Length == nameToTest.Length) {
                 return true;
             }
