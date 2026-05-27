@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace MaoriQuiz
 {
@@ -16,9 +17,12 @@ namespace MaoriQuiz
 
         static bool ValidName(string nameToTest)
         {
-            Regex nameRegex = new Regex(@"[a-z]{2,12} [a-z]{2,12}", RegexOptions.IgnoreCase);
-            if (nameRegex.Match(nameToTest).Length == nameToTest.Length) {
-                return true;
+            Regex nameRegex = new Regex(@"([a-z]{2,12} *)()+", RegexOptions.IgnoreCase);
+            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 30) {
+                int count = nameToTest.Count(c => c == ' ');
+                Console.WriteLine(count+1);
+                Console.WriteLine(nameRegex.Matches(nameToTest).Count());
+                if (count+1 == nameRegex.Matches(nameToTest).Count()) { return true; }
             }
             return false; 
         }
@@ -35,11 +39,19 @@ namespace MaoriQuiz
         37: white
         method for ansi formatting but somewhat simpler
         */
-        static string Fancify(string stringToApplyTo, bool isBold = false, bool isUnderline = false, int colorNum = 37) {
-            string bolding, underlining;
-            if (isBold == true) bolding = $"\e[1;{colorNum}m"; else bolding = "";
-            if (isUnderline == true) underlining = $"\e[4;{colorNum}m"; else underlining = "";
-            return $"{underlining}{bolding}{stringToApplyTo}\e[0m";
+        static string Fancify(string stringToApplyTo, bool isBold = false, bool isUnderline = false, int colorNum = 37, bool reset = true) {
+            string bolding, underlining, resetstring;
+
+            if (reset == true) resetstring = $"\e[0m";
+            else resetstring = "";
+
+            if (isBold == true) bolding = $"\e[1;{colorNum}m";
+            else bolding = "";
+
+            if (isUnderline == true) underlining = $"\e[4;{colorNum}m";
+            else underlining = "";
+
+            return $"{underlining}{bolding}{stringToApplyTo}{resetstring}";
         }
     }
 }
