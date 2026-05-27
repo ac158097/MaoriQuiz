@@ -11,8 +11,11 @@ namespace MaoriQuiz
             string name;
             do
             {
-                Console.Write($"Enter Your {Fancify("Full", isBold: false, isUnderline: true, colorNum: 33)} Name: ");
+                Console.Write($"Please enter your {Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
                 name = Console.ReadLine().Trim();
+                if (!ValidName(name)) {
+                    Console.WriteLine("Not a valid full name!");
+                }
             } while (!ValidName(name));
         }
 
