@@ -25,7 +25,6 @@ namespace MaoriQuiz
 
         /*
         color numbers:
-        0: white
         30: black
         31: red
         32: green
