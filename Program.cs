@@ -9,15 +9,15 @@ namespace MaoriQuiz
             string name;
             do
             {
-                Console.Write($"Enter Your {Fancify("Full", isBold: true, isUnderline: true)} Name: ");
+                Console.Write($"Enter Your {Fancify("Full", isBold: false, isUnderline: true, colorNum: 33)} Name: ");
                 name = Console.ReadLine().Trim();
             } while (!ValidName(name));
         }
 
         static bool ValidName(string nameToTest)
         {
-            Regex nameRegex = new Regex(@"[a-z]* [a-z]*", RegexOptions.IgnoreCase);
-            if ((nameRegex.Match(nameToTest).Length == nameToTest.Length) && (nameToTest.Length > 3 && nameToTest.Length < 20)) {
+            Regex nameRegex = new Regex(@"([a-z]* [a-z]*){3,20}", RegexOptions.IgnoreCase);
+            if (nameRegex.Match(nameToTest).Length == nameToTest.Length) {
                 return true;
             }
             return false; 
@@ -37,11 +37,10 @@ namespace MaoriQuiz
         method for ansi formatting but somewhat simpler
         */
         static string Fancify(string stringToApplyTo, bool isBold = false, bool isUnderline = false, int colorNum = 37) {
-            if (isUnderline == true) {
-                return $"\e[4;{colorNum}m\e[{Convert.ToInt16(isBold)};{colorNum}m{stringToApplyTo}\e[0m";
-            } else {
-                return $"\e[{Convert.ToInt16(isBold)};{colorNum}m{stringToApplyTo}\e[0m";
-            }
+            string bolding, underlining;
+            if (isBold == true) bolding = $"\e[1;{colorNum}m"; else bolding = "";
+            if (isUnderline == true) underlining = $"\e[4;{colorNum}m"; else underlining = "";
+            return $"{underlining}{bolding}{stringToApplyTo}\e[0m";
         }
     }
 }
