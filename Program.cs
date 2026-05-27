@@ -7,6 +7,7 @@ namespace MaoriQuiz
     {
         static void Main(string[] args)
         {
+            List<string> EASYQUESTIONS = new List<string>() { "" };
             string name;
             do
             {
@@ -18,7 +19,7 @@ namespace MaoriQuiz
         static bool ValidName(string nameToTest)
         {
             Regex nameRegex = new Regex(@"([a-z]{2,12} *)()+", RegexOptions.IgnoreCase);
-            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 30) {
+            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 30 && nameToTest.Contains(" ")) {
                 int count = nameToTest.Count(c => c == ' ');
                 Console.WriteLine(count+1);
                 Console.WriteLine(nameRegex.Matches(nameToTest).Count());
