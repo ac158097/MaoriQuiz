@@ -12,7 +12,7 @@ namespace MaoriQuiz
             {
                 Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
                 name = Console.ReadLine().Trim();
-                Regex.Replace(name, @"\b[a-z]", @"$0".ToUpper(), RegexOptions.IgnoreCase);
+                name = Regex.Replace(name, @"\b[a-z]", @"$0".ToUpper(), RegexOptions.IgnoreCase); //still broken
                 if (!StringHelper.ValidName(name)) {
                     Console.WriteLine("Not a valid full name!\n");
                 }
