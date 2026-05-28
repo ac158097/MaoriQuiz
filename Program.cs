@@ -11,26 +11,18 @@ namespace MaoriQuiz
             string name;
             do
             {
-                Console.Write($"Please enter your {Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
+                Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
                 name = Console.ReadLine().Trim();
-                if (!ValidName(name)) {
-                    Console.WriteLine("Not a valid full name!");
+                if (!StringHelper.ValidName(name)) {
+                    Console.WriteLine("Not a valid full name!\n");
                 }
-            } while (!ValidName(name));
+            } while (!StringHelper.ValidName(name));
         }
 
-        static bool ValidName(string nameToTest)
-        {
-            Regex nameRegex = new Regex(@"([a-z]{2,12} *)()+", RegexOptions.IgnoreCase);
-            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 30 && nameToTest.Contains(" ")) {
-                int count = nameToTest.Count(c => c == ' ');
-                Console.WriteLine(count+1);
-                Console.WriteLine(nameRegex.Matches(nameToTest).Count());
-                if (count+1 == nameRegex.Matches(nameToTest).Count()) { return true; }
-            }
-            return false; 
-        }
+        
+    }
 
+    public static class StringHelper {
         /*
         color numbers:
         30: black
@@ -43,7 +35,9 @@ namespace MaoriQuiz
         37: white
         method for ansi formatting but somewhat simpler
         */
-        static string Fancify(string stringToApplyTo, bool isBold = false, bool isUnderline = false, int colorNum = 37, bool reset = true) {
+
+        public static string Fancify(string stringToApplyTo, bool isBold = false, bool isUnderline = false, int colorNum = 37, bool reset = true)
+        {
             string bolding, underlining, resetstring;
 
             if (reset == true) resetstring = $"\e[0m";
@@ -56,6 +50,17 @@ namespace MaoriQuiz
             else underlining = "";
 
             return $"{underlining}{bolding}{stringToApplyTo}{resetstring}";
+        }
+
+        public static bool ValidName(string nameToTest)
+        {
+            Regex nameRegex = new Regex(@"([a-z]{2,12} *)()+", RegexOptions.IgnoreCase);
+            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 30 && nameToTest.Contains(" "))
+            {
+                int count = nameToTest.Count(c => c == ' ');
+                if (count + 1 == nameRegex.Matches(nameToTest).Count()) { return true; }
+            }
+            return false;
         }
     }
 }
