@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Quiz = System.Collections.Generic.List<(string, char, System.Collections.Generic.List<char>)>;
 
 namespace MaoriQuiz
 {
@@ -6,24 +7,33 @@ namespace MaoriQuiz
     {
         static void Main(string[] args)
         {
-            List<string> EASYQUESTIONS = new List<string>() { "" };
             string name;
             do
             {
                 Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
-                name = Console.ReadLine().Trim();
-                name = Regex.Replace(name, @"\b[a-z]", @"$0".ToUpper(), RegexOptions.IgnoreCase); //still broken
-                if (!StringHelper.ValidName(name)) {
-                    Console.WriteLine("Not a valid full name!\n");
+                name = StringHelper.Capitalize(Console.ReadLine().Trim());
+                if (!StringHelper.ValidName(name))
+                {
+                    Console.WriteLine("Not a valid full name! Must be under 30 characters and not contain special characters\n");
                 }
             } while (!StringHelper.ValidName(name));
             Console.WriteLine($"Welcome, {name}!");
+            GetQuizQuestions('e');
         }
 
-        
+        static Quiz GetQuizQuestions(char diffi)
+        {
+            return char.ToUpper(diffi) switch
+            {
+                'E' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
+                _ => []
+            };
+        }
     }
 
-    public static class StringHelper {
+
+    public static class StringHelper
+    {
         /*
         color numbers:
         30: black
@@ -61,7 +71,24 @@ namespace MaoriQuiz
                 int count = nameToTest.Count(c => c == ' ');
                 if (count + 1 == nameRegex.Matches(nameToTest).Count()) { return true; }
             }
+
+
             return false;
+        }
+
+        public static string Capitalize(string stringToCapitalize)
+        {
+            string returnString = Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
+            {
+                return match.ToString().ToUpper();
+            }, RegexOptions.IgnoreCase);
+
+            returnString = Regex.Replace(returnString, @"(?!\b)[A-Z]", delegate (Match match)
+            {
+                return match.ToString().ToLower();
+            });
+
+            return returnString;
         }
     }
 }
