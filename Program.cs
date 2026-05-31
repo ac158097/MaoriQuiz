@@ -8,6 +8,8 @@ namespace MaoriQuiz
         static void Main(string[] args)
         {
             string name;
+
+            StringHelper.ClearFullTerminal();
             do
             {
                 Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
@@ -18,6 +20,8 @@ namespace MaoriQuiz
                 }
             } while (!StringHelper.ValidName(name));
             Console.WriteLine($"Welcome, {name}!");
+
+
             GetQuizQuestions('e');
         }
 
@@ -89,6 +93,12 @@ namespace MaoriQuiz
             });
 
             return returnString;
+        }
+
+        public static void ClearFullTerminal()
+        {
+            Console.Clear();
+            Console.Write("\x1b[3J");
         }
     }
 }
