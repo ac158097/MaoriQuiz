@@ -20,8 +20,11 @@ namespace MaoriQuiz
                 }
             } while (!StringHelper.ValidName(name));
             Console.WriteLine($"Welcome, {name}!");
-
-
+            Console.WriteLine(@"Choose a difficulty:
+Easy (E)
+Medium (M)
+Hard (H)");
+            Console.ReadLine();
             GetQuizQuestions('e');
         }
 
@@ -30,6 +33,8 @@ namespace MaoriQuiz
             return char.ToUpper(diffi) switch
             {
                 'E' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
+                'M' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
+                'H' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
                 _ => []
             };
         }
