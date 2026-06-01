@@ -10,7 +10,7 @@ namespace MaoriQuiz
             string name;
             Quiz chosenDifficulty;
 
-            ConsoleHelper.ClearFullTerminal();
+            ConsoleHelper.ClearFullConsole();
             do
             {
                 Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
@@ -20,7 +20,7 @@ namespace MaoriQuiz
                     Console.WriteLine("Not a valid full name!\n");
                 }
             } while (!StringHelper.ValidName(name));
-            ConsoleHelper.ClearFullTerminal();
+            ConsoleHelper.ClearFullConsole();
             Console.WriteLine($"Welcome, {name}!\n");
             Console.WriteLine(@"Choose a difficulty:
 Easy (E)
@@ -35,6 +35,12 @@ Hard (H)");
                     Console.WriteLine("Invalid choice!");
                 }
             } while (chosenDifficulty.Count == 0);
+
+            ConsoleHelper.ClearFullConsole();
+            for (int i = 0; i < chosenDifficulty.Count(); i++)
+            {
+                Console.WriteLine(chosenDifficulty[i].Item1);
+            }
         }
 
         static Quiz GetQuizQuestions(string diffi)
@@ -43,9 +49,19 @@ Hard (H)");
             {
                 return char.ToUpper(diffi[0]) switch
                 {
-                    'E' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
-                    'M' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
-                    'H' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
+                    'E' => [
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']),
+                        ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])
+                    ],
+                    'M' => [
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']),
+                        ("What does aroha mean?\nA. Good.\nB. Terrible.\nC. Effort.\nD. Love.", 'D', ['A', 'B', 'C', 'D']),
+                        ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])
+                    ],
+                    'H' => [
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']),
+                        ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])
+                    ],
                     _ => []
                 };
             }
@@ -114,7 +130,7 @@ Hard (H)");
 
     public static class ConsoleHelper
     {
-        public static void ClearFullTerminal()
+        public static void ClearFullConsole()
         {
             Console.Clear();
             Console.Write("\x1b[3J");
