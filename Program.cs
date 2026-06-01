@@ -22,10 +22,7 @@ namespace MaoriQuiz
             } while (!StringHelper.ValidName(name));
             ConsoleHelper.ClearFullConsole();
             Console.WriteLine($"Welcome, {name}!\n");
-            Console.WriteLine(@"Choose a difficulty:
-Easy (E)
-Medium (M)
-Hard (H)");
+            Console.WriteLine("Choose a difficulty:\nEasy (E)\nMedium (M)\nHard (H)");
             do
             {
                 Console.Write("\nChoice: ");
