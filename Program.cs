@@ -8,35 +8,48 @@ namespace MaoriQuiz
         static void Main(string[] args)
         {
             string name;
+            Quiz chosenDifficulty;
 
-            StringHelper.ClearFullTerminal();
+            ConsoleHelper.ClearFullTerminal();
             do
             {
                 Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
                 name = StringHelper.Capitalize(Console.ReadLine().Trim());
                 if (!StringHelper.ValidName(name))
                 {
-                    Console.WriteLine("Not a valid full name! Must be under 30 characters and not contain special characters\n");
+                    Console.WriteLine("Not a valid full name!\n");
                 }
             } while (!StringHelper.ValidName(name));
-            Console.WriteLine($"Welcome, {name}!");
+            ConsoleHelper.ClearFullTerminal();
+            Console.WriteLine($"Welcome, {name}!\n");
             Console.WriteLine(@"Choose a difficulty:
 Easy (E)
 Medium (M)
 Hard (H)");
-            Console.ReadLine();
-            GetQuizQuestions('e');
+            do
+            {
+                Console.Write("\nChoice: ");
+                chosenDifficulty = GetQuizQuestions(Console.ReadLine());
+                if (chosenDifficulty.Count == 0)
+                {
+                    Console.WriteLine("Invalid choice!");
+                }
+            } while (chosenDifficulty.Count == 0);
         }
 
-        static Quiz GetQuizQuestions(char diffi)
+        static Quiz GetQuizQuestions(string diffi)
         {
-            return char.ToUpper(diffi) switch
+            if (diffi.Length == 1)
             {
-                'E' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
-                'M' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
-                'H' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
-                _ => []
-            };
+                return char.ToUpper(diffi[0]) switch
+                {
+                    'E' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
+                    'M' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
+                    'H' => [("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']), ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])],
+                    _ => []
+                };
+            }
+            else return [];
         }
     }
 
@@ -74,14 +87,12 @@ Hard (H)");
 
         public static bool ValidName(string nameToTest)
         {
-            Regex nameRegex = new Regex(@"([a-z]{2,12} *)()+", RegexOptions.IgnoreCase);
-            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 30 && nameToTest.Contains(" "))
+            Regex nameRegex = new Regex(@"([a-z]{1,12}\.? *)()+", RegexOptions.IgnoreCase);
+            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 40 && nameToTest.Contains(" "))
             {
                 int count = nameToTest.Count(c => c == ' ');
                 if (count + 1 == nameRegex.Matches(nameToTest).Count()) { return true; }
             }
-
-
             return false;
         }
 
@@ -99,7 +110,10 @@ Hard (H)");
 
             return returnString;
         }
+    }
 
+    public static class ConsoleHelper
+    {
         public static void ClearFullTerminal()
         {
             Console.Clear();
