@@ -87,8 +87,8 @@ Hard (H)");
 
         public static bool ValidName(string nameToTest)
         {
-            Regex nameRegex = new Regex(@"([a-z]{1,12}\.? *)()+", RegexOptions.IgnoreCase);
-            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 40 && nameToTest.Contains(" "))
+            Regex nameRegex = new Regex(@"([a-z]+\.? *)()+", RegexOptions.IgnoreCase);
+            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 52 && nameToTest.Contains(" "))
             {
                 int count = nameToTest.Count(c => c == ' ');
                 if (count + 1 == nameRegex.Matches(nameToTest).Count()) { return true; }
