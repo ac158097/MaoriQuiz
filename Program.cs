@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿#nullable disable
+
+using System.Text.RegularExpressions;
 using Question = (string, System.Collections.Generic.List<char>, System.Collections.Generic.List<char>);
 
 namespace MaoriQuiz
@@ -8,8 +10,9 @@ namespace MaoriQuiz
         static void Main(string[] args)
         {
             string name;
-            float score = 0;
-            List<Question> chosenDifficulty;
+            float score;
+            Dictionary<char, float> highscores = new Dictionary<char, float>() { { 'E', 0 }, { 'M', 0 }, { 'H', 0 } };
+            List <Question> chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
             do
@@ -23,6 +26,7 @@ namespace MaoriQuiz
             } while (!StringHelper.ValidName(name));
 
             ConsoleHelper.ClearFullConsole();
+            score = 0;
             Console.WriteLine($"Welcome, {name}!\n");
             Console.WriteLine("Choose a difficulty:\nEasy (E)\nMedium (M)\nHard (H)");
 
