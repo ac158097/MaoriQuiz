@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using Quiz = System.Collections.Generic.List<(string, char, System.Collections.Generic.List<char>)>;
+using Question = (string, System.Collections.Generic.List<char>, System.Collections.Generic.List<char>);
 
 namespace MaoriQuiz
 {
@@ -8,8 +8,8 @@ namespace MaoriQuiz
         static void Main(string[] args)
         {
             string name;
-            int score = 0;
-            Quiz chosenDifficulty;
+            float score = 0;
+            List<Question> chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
             do
@@ -43,26 +43,28 @@ namespace MaoriQuiz
                 if (AskQuestion(chosenDifficulty[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
                 else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
             }
+            Console.WriteLine($"Score: {score}");
+            Console.WriteLine($"Percent: {Math.Round((score / chosenDifficulty.Count()) * 100)}%");
         }
 
-        static Quiz GetQuizQuestions(string diffi)
+        static List<Question> GetQuizQuestions(string diffi)
         {
             if (diffi.Length == 1)
             {
                 return char.ToUpper(diffi[0]) switch
                 {
                     'E' => [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
                     ],
                     'M' => [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']),
-                        ("What does aroha mean?\nA. Good.\nB. Terrible.\nC. Effort.\nD. Love.", 'D', ['A', 'B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
+                        ("What does aroha mean?\nA. Good.\nB. Terrible.\nC. Effort.\nD. Love.", ['D'], ['A', 'B', 'C', 'D']),
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
                     ],
                     'H' => [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", 'A', ['A', 'B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", 'Y', ['Y', 'N'])
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
                     ],
                     _ => []
                 };
@@ -70,7 +72,7 @@ namespace MaoriQuiz
             else return [];
         }
 
-        static bool AskQuestion((string, char, System.Collections.Generic.List<char>) questions)
+        static bool AskQuestion(Question questions)
         {
             string userInput;
             Console.WriteLine(questions.Item1);
@@ -84,7 +86,7 @@ namespace MaoriQuiz
                     userInput = "♣";
                 }
             } while (userInput == "♣");
-            return char.ToUpper(userInput[0]) == questions.Item2;
+            return questions.Item2.Contains(char.ToUpper(userInput[0]));
         }
     }
 
