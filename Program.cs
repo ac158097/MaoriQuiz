@@ -71,9 +71,19 @@ namespace MaoriQuiz
 
         static bool AskQuestion((string, char, System.Collections.Generic.List<char>) questions)
         {
-            Console.Write(questions.Item1 + "\nAnswer: ");
-            Console.ReadLine();
-            return true;
+            string userInput;
+            Console.WriteLine(questions.Item1);
+            do
+            {
+                Console.Write("Answer: ");
+                userInput = Console.ReadLine();
+                if (userInput.Length != 1)
+                {
+                    Console.WriteLine("Invalid Answer!\n");
+                    userInput = "♣";
+                }
+            } while (!questions.Item3.Contains(userInput[0]));
+            return userInput[0] == questions.Item2;
         }
     }
 
