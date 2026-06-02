@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Data.SqlTypes;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Quiz = System.Collections.Generic.List<(string, char, System.Collections.Generic.List<char>)>;
 
 namespace MaoriQuiz
@@ -14,19 +16,21 @@ namespace MaoriQuiz
             do
             {
                 Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
-                name = StringHelper.Capitalize(Console.ReadLine().Trim());
+                name = StringHelper.Capitalize(Console.ReadLine()+"".Trim());
                 if (!StringHelper.ValidName(name))
                 {
                     Console.WriteLine("Not a valid full name!\n");
                 }
             } while (!StringHelper.ValidName(name));
+
             ConsoleHelper.ClearFullConsole();
             Console.WriteLine($"Welcome, {name}!\n");
             Console.WriteLine("Choose a difficulty:\nEasy (E)\nMedium (M)\nHard (H)");
+
             do
             {
                 Console.Write("\nChoice: ");
-                chosenDifficulty = GetQuizQuestions(Console.ReadLine());
+                chosenDifficulty = GetQuizQuestions(Console.ReadLine()+"");
                 if (chosenDifficulty.Count == 0)
                 {
                     Console.WriteLine("Invalid choice!");
@@ -36,7 +40,7 @@ namespace MaoriQuiz
             ConsoleHelper.ClearFullConsole();
             for (int i = 0; i < chosenDifficulty.Count(); i++)
             {
-                Console.WriteLine(chosenDifficulty[i].Item1);
+                AskQuestion(chosenDifficulty[i]);
             }
         }
 
@@ -64,8 +68,14 @@ namespace MaoriQuiz
             }
             else return [];
         }
-    }
 
+        static bool AskQuestion((string, char, System.Collections.Generic.List<char>) questions)
+        {
+            Console.Write(questions.Item1 + "\nAnswer: ");
+            Console.ReadLine();
+            return true;
+        }
+    }
 
     public static class StringHelper
     {
@@ -84,18 +94,18 @@ namespace MaoriQuiz
 
         public static string Fancify(string stringToApplyTo, bool isBold = false, bool isUnderline = false, int colorNum = 37, bool reset = true)
         {
-            string bolding, underlining, resetstring;
+            string formatting, resetstring;
 
+            switch (isBold, isUnderline)
+            {
+                case (false, false): formatting = $"\e[0;{colorNum}m"; break;
+                case (false, true): formatting = $"\e[4;{colorNum}m"; break;
+                case (true, false): formatting = $"\e[1;{colorNum}m"; break;
+                case (true, true): formatting = $"\e[1;{colorNum}m\e[4;{colorNum}m"; break;
+            }
             if (reset == true) resetstring = $"\e[0m";
             else resetstring = "";
-
-            if (isBold == true) bolding = $"\e[1;{colorNum}m";
-            else bolding = "";
-
-            if (isUnderline == true) underlining = $"\e[4;{colorNum}m";
-            else underlining = "";
-
-            return $"{underlining}{bolding}{stringToApplyTo}{resetstring}";
+            return $"{formatting}{stringToApplyTo}{resetstring}";
         }
 
         public static bool ValidName(string nameToTest)
