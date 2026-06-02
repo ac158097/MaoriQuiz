@@ -1,6 +1,4 @@
-﻿using System.Data.SqlTypes;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Quiz = System.Collections.Generic.List<(string, char, System.Collections.Generic.List<char>)>;
 
 namespace MaoriQuiz
@@ -10,13 +8,14 @@ namespace MaoriQuiz
         static void Main(string[] args)
         {
             string name;
+            int score = 0;
             Quiz chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
             do
             {
                 Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
-                name = StringHelper.Capitalize(Console.ReadLine()+"".Trim());
+                name = StringHelper.Capitalize(Console.ReadLine().Trim());
                 if (!StringHelper.ValidName(name))
                 {
                     Console.WriteLine("Not a valid full name!\n");
@@ -30,7 +29,7 @@ namespace MaoriQuiz
             do
             {
                 Console.Write("\nChoice: ");
-                chosenDifficulty = GetQuizQuestions(Console.ReadLine()+"");
+                chosenDifficulty = GetQuizQuestions(Console.ReadLine());
                 if (chosenDifficulty.Count == 0)
                 {
                     Console.WriteLine("Invalid choice!");
@@ -40,7 +39,9 @@ namespace MaoriQuiz
             ConsoleHelper.ClearFullConsole();
             for (int i = 0; i < chosenDifficulty.Count(); i++)
             {
-                AskQuestion(chosenDifficulty[i]);
+                Console.Write($"Question {i + 1}: ");
+                if (AskQuestion(chosenDifficulty[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
+                else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
             }
         }
 
@@ -77,13 +78,13 @@ namespace MaoriQuiz
             {
                 Console.Write("Answer: ");
                 userInput = Console.ReadLine();
-                if (userInput.Length != 1)
+                if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])))
                 {
-                    Console.WriteLine("Invalid Answer!\n");
+                    Console.WriteLine("\nInvalid Answer!");
                     userInput = "♣";
                 }
-            } while (!questions.Item3.Contains(userInput[0]));
-            return userInput[0] == questions.Item2;
+            } while (userInput == "♣");
+            return char.ToUpper(userInput[0]) == questions.Item2;
         }
     }
 
@@ -109,12 +110,11 @@ namespace MaoriQuiz
             switch (isBold, isUnderline)
             {
                 case (false, false): formatting = $"\e[0;{colorNum}m"; break;
-                case (false, true): formatting = $"\e[4;{colorNum}m"; break;
                 case (true, false): formatting = $"\e[1;{colorNum}m"; break;
+                case (false, true): formatting = $"\e[4;{colorNum}m"; break;
                 case (true, true): formatting = $"\e[1;{colorNum}m\e[4;{colorNum}m"; break;
             }
-            if (reset == true) resetstring = $"\e[0m";
-            else resetstring = "";
+            resetstring = (reset == true) ? $"\e[0m" : "";
             return $"{formatting}{stringToApplyTo}{resetstring}";
         }
 
