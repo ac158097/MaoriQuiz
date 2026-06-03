@@ -13,7 +13,7 @@ namespace MaoriQuiz
             float score;
             bool replay = false;
             string replaychoice;
-            Dictionary<char, float> highscores = new Dictionary<char, float>() { { 'E', 0 }, { 'M', 0 }, { 'H', 0 } };
+            Dictionary<char, float> highscores = new Dictionary<char, float>() { };
             (char, List<Question>) chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
@@ -57,6 +57,10 @@ namespace MaoriQuiz
 
                 Console.WriteLine($"Score: {score}");
                 Console.WriteLine($"Percent: {Math.Round((score / chosenDifficulty.Item2.Count()) * 100)}%");
+                if (!highscores.ContainsKey(chosenDifficulty.Item1))
+                {
+                    highscores.Add(chosenDifficulty.Item1, 0);
+                }
                 if (score > highscores[chosenDifficulty.Item1])
                 {
                     Console.WriteLine("New High Score!");
