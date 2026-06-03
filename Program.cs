@@ -11,8 +11,10 @@ namespace MaoriQuiz
         {
             string name;
             float score;
+            bool replay = false;
+            string replaychoice;
             Dictionary<char, float> highscores = new Dictionary<char, float>() { { 'E', 0 }, { 'M', 0 }, { 'H', 0 } };
-            List <Question> chosenDifficulty;
+            (char, List<Question>) chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
             do
@@ -25,60 +27,92 @@ namespace MaoriQuiz
                 }
             } while (!StringHelper.ValidName(name));
 
-            ConsoleHelper.ClearFullConsole();
-            score = 0;
-            Console.WriteLine($"Welcome, {name}!\n");
-            Console.WriteLine("Choose a difficulty:\nEasy (E)\nMedium (M)\nHard (H)");
-
-            //pick a difficulty
             do
             {
-                Console.Write("\nChoice: ");
-                chosenDifficulty = GetQuizQuestions(Console.ReadLine());
-                if (chosenDifficulty.Count == 0)
+                ConsoleHelper.ClearFullConsole();
+                score = 0;
+                Console.WriteLine($"Welcome, {name}!\n");
+                Console.WriteLine("Choose a difficulty:\nEasy (E)\nMedium (M)\nHard (H)");
+
+                //pick a difficulty
+                do
                 {
-                    Console.WriteLine("Invalid choice!");
+                    Console.Write("\nChoice: ");
+                    chosenDifficulty = GetQuizQuestions(Console.ReadLine());
+                    if (chosenDifficulty.Item2.Count == 0)
+                    {
+                        Console.WriteLine("Invalid choice!");
+                    }
+                } while (chosenDifficulty.Item2.Count == 0);
+
+                ConsoleHelper.ClearFullConsole();
+
+                // ask each question
+                for (int i = 0; i < chosenDifficulty.Item2.Count(); i++)
+                {
+                    Console.Write($"Question {i + 1}: ");
+                    if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
+                    else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
                 }
-            } while (chosenDifficulty.Count == 0);
 
-            ConsoleHelper.ClearFullConsole();
+                Console.WriteLine($"Score: {score}");
+                Console.WriteLine($"Percent: {Math.Round((score / chosenDifficulty.Item2.Count()) * 100)}%");
+                if (score > highscores[chosenDifficulty.Item1])
+                {
+                    Console.WriteLine("New High Score!");
+                    highscores[chosenDifficulty.Item1] = score;
+                }
 
-            // ask each question
-            for (int i = 0; i < chosenDifficulty.Count(); i++)
-            {
-                Console.Write($"Question {i + 1}: ");
-                if (AskQuestion(chosenDifficulty[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
-                else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
-            }
 
-            Console.WriteLine($"Score: {score}");
-            Console.WriteLine($"Percent: {Math.Round((score / chosenDifficulty.Count()) * 100)}%");
-            //if (highscores.ContainsKey(char.ToUpper(diffi[0])))
+                do {
+                    Console.Write("Would you like to replay (Y/N)?\nOption: ");
+                    replaychoice = Console.ReadLine();
+                    if (replaychoice.Length == 1)
+                    {
+                        if (char.ToUpper(replaychoice[0]) == 'Y')
+                        {
+                            replay = true;
+                        }
+                        else if (char.ToUpper(replaychoice[0]) == 'N')
+                        {
+                            replay = false;
+                        }
+                        else {
+                            Console.WriteLine("Invalid Option!");
+                            replaychoice = "♣";
+                        }
+                    } else {
+                        Console.WriteLine("Invalid Option!");
+                        replaychoice = "♣";
+                    }
+                } while (replaychoice == "♣");
+            } while (replay == true);
         }
 
-        static List<Question> GetQuizQuestions(string diffi)
+        static (char, List<Question>) GetQuizQuestions(string diffi)
         {
             if (diffi.Length == 1)
             {
                 return char.ToUpper(diffi[0]) switch
                 {
-                    'E' => [
+                    'E' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
-                    ],
-                    'M' => [
+                    ]),
+                    'M' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
+                        ("What is the capital of New Zealand?\nA. Christchurch.\nB. Wellington.\nC. Auckland.\nD. ", ['B'], ['A', 'B', 'C', 'D']),
                         ("What does aroha mean?\nA. Good.\nB. Terrible.\nC. Effort.\nD. Love.", ['D'], ['A', 'B', 'C', 'D']),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
-                    ],
-                    'H' => [
+                    ]),
+                    'H' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
-                    ],
-                    _ => []
+                    ]),
+                    _ => ('♣', [])
                 };
             }
-            else return [];
+            else return ('♣', []);
         }
 
         static bool AskQuestion(Question questions)
@@ -91,7 +125,7 @@ namespace MaoriQuiz
                 userInput = Console.ReadLine();
                 if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])))
                 {
-                    Console.WriteLine("\nInvalid Answer!");
+                    Console.WriteLine("\nInvalid Answer!\n");
                     userInput = "♣";
                 }
             } while (userInput == "♣");
