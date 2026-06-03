@@ -31,8 +31,7 @@ namespace MaoriQuiz
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
-                Console.WriteLine($"Welcome, {name}!\n");
-                Console.WriteLine("Choose a difficulty:\nEasy (E)\nMedium (M)\nHard (H)");
+                Console.WriteLine("Welcome, {0}!\n\nChoose a difficulty:\nEasy [E] (High Score: {1})\nMedium [M] (High Score: {2})\nHard [H] (High Score: {3})", name, highscores.ContainsKey('E') ? highscores['E'] : 0, highscores.ContainsKey('M') ? highscores['M'] : 0, highscores.ContainsKey('H') ? highscores['H'] : 0);
 
                 //pick a difficulty
                 do
@@ -55,8 +54,7 @@ namespace MaoriQuiz
                     else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
                 }
 
-                Console.WriteLine($"Score: {score}");
-                Console.WriteLine($"Percent: {Math.Round((score / chosenDifficulty.Item2.Count()) * 100)}%");
+                Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / chosenDifficulty.Item2.Count()) * 100)}%");
                 if (!highscores.ContainsKey(chosenDifficulty.Item1))
                 {
                     highscores.Add(chosenDifficulty.Item1, 0);
@@ -104,23 +102,25 @@ namespace MaoriQuiz
                 return char.ToUpper(diffi[0]) switch
                 {
                     'E' => (char.ToUpper(diffi[0]), [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['B', 'C', 'D']),
+                        ("Who was the prime minister in 2026?\nA. Christopher Luxon\n B. Winston Peters\n C. Martin Luther King Jr.\n D. Joe Biden", ['A'], ['B', 'C', 'D']),
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], [])
                     ]),
                     'M' => (char.ToUpper(diffi[0]), [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
-                        ("What is the capital of New Zealand?\nA. Christchurch.\nB. Wellington.\nC. Auckland.\nD. ", ['B'], ['A', 'B', 'C', 'D']),
-                        ("What does aroha mean?\nA. Good.\nB. Terrible.\nC. Effort.\nD. Love.", ['D'], ['A', 'B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['B', 'C', 'D']),
+                        ("What is the capital of New Zealand?\nA. Christchurch.\nB. Wellington.\nC. Auckland.\nD. Hamilton", ['B'], ['A', 'C', 'D']),
+                        ("What does aroha mean?\nA. Good.\nB. Terrible.\nC. Effort.\nD. Love.", ['D'], ['A', 'B', 'C']),
+                        ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T']),
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], [])
                     ]),
                     'H' => (char.ToUpper(diffi[0]), [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['A', 'B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], ['Y', 'N'])
+                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['B', 'C', 'D']),
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], [])
                     ]),
                     _ => ('♣', [])
                 };
             }
-            else return ('♣', []);
+            return ('♣', []);
         }
 
         static bool AskQuestion(Question questions)
@@ -131,7 +131,7 @@ namespace MaoriQuiz
             {
                 Console.Write("Answer: ");
                 userInput = Console.ReadLine();
-                if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])))
+                if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) || !questions.Item2.Contains(char.ToUpper(userInput[0])))
                 {
                     Console.WriteLine("\nInvalid Answer!\n");
                     userInput = "♣";
