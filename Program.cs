@@ -30,6 +30,7 @@ namespace MaoriQuiz
             Console.WriteLine($"Welcome, {name}!\n");
             Console.WriteLine("Choose a difficulty:\nEasy (E)\nMedium (M)\nHard (H)");
 
+            //pick a difficulty
             do
             {
                 Console.Write("\nChoice: ");
@@ -41,14 +42,18 @@ namespace MaoriQuiz
             } while (chosenDifficulty.Count == 0);
 
             ConsoleHelper.ClearFullConsole();
+
+            // ask each question
             for (int i = 0; i < chosenDifficulty.Count(); i++)
             {
                 Console.Write($"Question {i + 1}: ");
                 if (AskQuestion(chosenDifficulty[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
                 else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
             }
+
             Console.WriteLine($"Score: {score}");
             Console.WriteLine($"Percent: {Math.Round((score / chosenDifficulty.Count()) * 100)}%");
+            //if (highscores.ContainsKey(char.ToUpper(diffi[0])))
         }
 
         static List<Question> GetQuizQuestions(string diffi)
