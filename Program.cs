@@ -64,7 +64,8 @@ namespace MaoriQuiz
                 }
 
 
-                do {
+                do
+                {
                     Console.Write("Would you like to replay (Y/N)?\nOption: ");
                     replaychoice = Console.ReadLine();
                     if (replaychoice.Length == 1)
@@ -77,11 +78,14 @@ namespace MaoriQuiz
                         {
                             replay = false;
                         }
-                        else {
+                        else
+                        {
                             Console.WriteLine("Invalid Option!");
                             replaychoice = "♣";
                         }
-                    } else {
+                    }
+                    else
+                    {
                         Console.WriteLine("Invalid Option!");
                         replaychoice = "♣";
                     }
@@ -176,17 +180,13 @@ namespace MaoriQuiz
 
         public static string Capitalize(string stringToCapitalize)
         {
-            string returnString = Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
+            return Regex.Replace(Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
             {
                 return match.ToString().ToUpper();
-            }, RegexOptions.IgnoreCase);
-
-            returnString = Regex.Replace(returnString, @"(?!\b)[A-Z]", delegate (Match match)
+            }, RegexOptions.IgnoreCase), @"(?!\b)[A-Z]", delegate (Match match)
             {
                 return match.ToString().ToLower();
             });
-
-            return returnString;
         }
     }
 
