@@ -115,7 +115,7 @@ namespace MaoriQuiz
                     ]),
                     'H' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], [])
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y'], ['N'])
                     ]),
                     _ => ('♣', [])
                 };
@@ -131,7 +131,7 @@ namespace MaoriQuiz
             {
                 Console.Write("Answer: ");
                 userInput = Console.ReadLine();
-                if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) || !questions.Item2.Contains(char.ToUpper(userInput[0])))
+                if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])))
                 {
                     Console.WriteLine("\nInvalid Answer!\n");
                     userInput = "♣";
