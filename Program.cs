@@ -7,7 +7,7 @@ namespace MaoriQuiz
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main(/*string[] args*/)
         {
             string name;
             float score;
@@ -84,13 +84,13 @@ namespace MaoriQuiz
                         }
                         else
                         {
-                            Console.WriteLine("Invalid Option!");
+                            Console.WriteLine("Invalid Option!\n");
                             replaychoice = "♣";
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid Option!");
+                        Console.WriteLine("Invalid Option!\n");
                         replaychoice = "♣";
                     }
                 } while (replaychoice == "♣");
@@ -182,16 +182,13 @@ namespace MaoriQuiz
             return false;
         }
 
-        public static string Capitalize(string stringToCapitalize)
-        {
-            return Regex.Replace(Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
+        public static string Capitalize(string stringToCapitalize) => Regex.Replace(Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
             {
                 return match.ToString().ToUpper();
             }, RegexOptions.IgnoreCase), @"(?!\b)[A-Z]", delegate (Match match)
             {
                 return match.ToString().ToLower();
             });
-        }
     }
 
     public static class ConsoleHelper
