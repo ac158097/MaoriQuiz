@@ -13,7 +13,7 @@ namespace MaoriQuiz
             float score;
             bool replay = false;
             string replaychoice;
-            Dictionary<char, float> highscores = new();
+            Dictionary<char, float> highscores = [];
             (char, List<Question>) chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
