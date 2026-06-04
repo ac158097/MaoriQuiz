@@ -35,7 +35,15 @@ namespace MaoriQuiz
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
-                Console.WriteLine("Welcome, {0}!\n\nChoose a difficulty:\nEasy [E] (High Score: {1}, {}%)\nMedium [M] (High Score: {2}, {5}%)\nHard [H] (High Score: {3}, {6}%)", name, GetHighscoreOrZero(highscores, 'E'), GetHighscoreOrZero(highscores, 'M'), GetHighscoreOrZero(highscores, 'H'), Math.Round(GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count()) * 100, Math.Round(GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count()) * 100, Math.Round(GetHighscoreOrZero(highscores, 'H'), GetQuizQuestions("H").Item2.Count()) * 100);
+                Console.WriteLine("Welcome, {0}!\nChoose a difficulty:\nEasy [E] (High Score: {1}, {4}% Correct)\nMedium [M] (High Score: {2}, {5}% Correct)\nHard [H] (High Score: {3}, {6}% Correct)",
+                                  name,
+                                  GetHighscoreOrZero(highscores, 'E'),
+                                  GetHighscoreOrZero(highscores, 'M'),
+                                  GetHighscoreOrZero(highscores, 'H'),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count()) * 100),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count()) * 100),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count()) * 100)
+                                  );
 
                 //pick a difficulty
                 do
@@ -102,9 +110,8 @@ namespace MaoriQuiz
             } while (replay == true);
         }
 
-        static float GetHighscoreOrZero(Scoretable scores, char difficulty) {
-            return scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
-        }
+        //return a high score, if there is none, return zero
+        static float GetHighscoreOrZero(Scoretable scores, char difficulty) => scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
 
         //returns quiz questions
         static (char, List<Question>) GetQuizQuestions(string diffi)
@@ -121,13 +128,13 @@ namespace MaoriQuiz
                     'M' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D']),
                         ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D']),
+                        ("What is the longest name of a place in New Zealand?\nA. Taumata­whakatangihanga­koauau­o­tamatea­turi­pukaka­piki­maunga­horo­nuku­pokai­whenua­ki­tana­tahu\nB. Llanfair­pwllgwyngyll­gogery­chwyrn­drobwll­llan­tysilio­gogo­goch\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], []),
                         ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C']),
                         ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T']),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], []),
                     ]),
                     'H' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D']),
-                        ("What is the longest name of a place in New Zealand?\nA. Taumata­whakatangihanga­koauau­o­tamatea­turi­pukaka­piki­maunga­horo­nuku­pokai­whenua­ki­tana­tahu\nB. Llanfair­pwllgwyngyll­gogery­chwyrn­drobwll­llan­tysilio­gogo­goch\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], []),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y'], ['N']),
                     ]),
                     _ => ('♣', [])
