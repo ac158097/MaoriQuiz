@@ -10,6 +10,7 @@ namespace MaoriQuiz
     {
         static void Main(/*string[] args*/)
         {
+            //initialize vars
             string name;
             float score;
             bool replay = false;
@@ -18,6 +19,7 @@ namespace MaoriQuiz
             (char, List<Question>) chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
+            //ask for name
             do
             {
                 Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
@@ -55,6 +57,8 @@ namespace MaoriQuiz
                     else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
                 }
 
+
+                //quiz score related things
                 Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / chosenDifficulty.Item2.Count()) * 100)}%");
                 if (!highscores.ContainsKey(chosenDifficulty.Item1))
                 {
@@ -67,6 +71,7 @@ namespace MaoriQuiz
                 }
 
 
+                //ask if replaying or not
                 do
                 {
                     Console.Write("Would you like to replay (Y/N)?\nOption: ");
@@ -96,6 +101,7 @@ namespace MaoriQuiz
             } while (replay == true);
         }
 
+        //returns quiz questions
         static (char, List<Question>) GetQuizQuestions(string diffi)
         {
             if (diffi.Length == 1)
@@ -124,6 +130,7 @@ namespace MaoriQuiz
             return ('♣', []);
         }
 
+        //gets the users answer for a question and checks if its correct
         static bool AskQuestion(Question questions)
         {
             string userInput;
@@ -174,6 +181,7 @@ namespace MaoriQuiz
 
         public static string RGBIfy(string text, RGBColour col) => "\x1b[38;2;" + col.Item1 + ";" + col.Item2 + ";" + col.Item3 + "m" + text + "\e[0m";
 
+        //checks if a name is within 52 chars long, is at least 2 words, doesnt have double spacebars, doesnt have numbers, and any full stops must come after words rather than in or before
         public static bool ValidName(string nameToTest)
         {
             Regex nameRegex = new Regex(@"([a-z]+\.? *)()+", RegexOptions.IgnoreCase);
@@ -185,6 +193,7 @@ namespace MaoriQuiz
             return false;
         }
 
+        //capitalize first letters of words in string, otherwise decapitalizes them
         public static string Capitalize(string stringToCapitalize) => Regex.Replace(Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
             {
                 return match.ToString().ToUpper();
@@ -194,6 +203,7 @@ namespace MaoriQuiz
             });
     }
 
+    //clears console (do i have to explain)
     public static class ConsoleHelper
     {
         public static void ClearFullConsole()
