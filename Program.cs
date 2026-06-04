@@ -2,7 +2,7 @@
 
 using System.Text.RegularExpressions;
 using Question = (string, System.Collections.Generic.List<char>, System.Collections.Generic.List<char>);
-using Scoretable = System.Collections.Generic.Dictionary<char, float>;
+using Scoredict = System.Collections.Generic.Dictionary<char, float>;
 using RGBColour = (int, int, int);
 
 namespace MaoriQuiz
@@ -16,7 +16,7 @@ namespace MaoriQuiz
             float score;
             bool replay = false;
             string replaychoice;
-            Scoretable highscores = [];
+            Scoredict highscores = [];
             (char, List<Question>) chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
@@ -111,7 +111,7 @@ namespace MaoriQuiz
         }
 
         //return a high score, if there is none, return zero
-        static float GetHighscoreOrZero(Scoretable scores, char difficulty) => scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
+        static float GetHighscoreOrZero(Scoredict scores, char difficulty) => scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
 
         //returns quiz questions
         static (char, List<Question>) GetQuizQuestions(string diffi)
@@ -193,7 +193,16 @@ namespace MaoriQuiz
         }
 
         //colours text by taking rgb input
-        public static string RGBIfy(string text, RGBColour col) => "\x1b[38;2;" + col.Item1 + ";" + col.Item2 + ";" + col.Item3 + "m" + text + "\e[0m";
+        public static string RGBIfy(string text, RGBColour col, bool reset = true) {
+            string resulttext = "\x1b[38;2;" + col.Item1 + ";" + col.Item2 + ";" + col.Item3 + "m" + text;
+            if (reset == true)
+            {
+                resulttext += "\e[0m";
+            }
+            return resulttext;
+        }
+
+        public static void ResetFormatting() { Console.WriteLine("\e[0m"); }
 
         //checks if a name is within 52 chars long, is at least 2 words, doesnt have double spacebars, doesnt have numbers, and any full stops must come after words rather than in or before
         public static bool ValidName(string nameToTest)
