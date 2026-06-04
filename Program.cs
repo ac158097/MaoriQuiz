@@ -39,11 +39,11 @@ namespace MaoriQuiz
                 //pick a difficulty
                 do
                 {
-                    Console.Write("\nChoice: ");
+                    Console.Write(StringHelper.RGBIfy("Choice: ", (91, 217, 210)));
                     chosenDifficulty = GetQuizQuestions(Console.ReadLine());
                     if (chosenDifficulty.Item2.Count == 0)
                     {
-                        Console.WriteLine("Invalid choice!");
+                        Console.WriteLine("Invalid choice!\n");
                     }
                 } while (chosenDifficulty.Item2.Count == 0);
 
@@ -74,7 +74,7 @@ namespace MaoriQuiz
                 //ask if replaying or not
                 do
                 {
-                    Console.Write("Would you like to replay (Y/N)?\nOption: ");
+                    Console.Write($"Would you like to replay (Y/N)?\n{StringHelper.RGBIfy("Option: ", (91, 217, 210))}");
                     replaychoice = Console.ReadLine();
                     if (replaychoice.Length == 1)
                     {
@@ -110,7 +110,7 @@ namespace MaoriQuiz
                 {
                     'E' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['B', 'C', 'D']),
-                        ("Who was the prime minister in 2026?\nA. Christopher Luxon\n B. Winston Peters\n C. Martin Luther King Jr.\n D. Joe Biden", ['A'], ['B', 'C', 'D']),
+                        ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D']),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], [])
                     ]),
                     'M' => (char.ToUpper(diffi[0]), [
@@ -137,7 +137,7 @@ namespace MaoriQuiz
             Console.WriteLine(questions.Item1);
             do
             {
-                Console.Write(StringHelper.RGBIfy("Answer: ", (50, 200 ,25)));
+                Console.Write(StringHelper.RGBIfy("Answer: ", (91, 217, 210)));
                 userInput = Console.ReadLine();
                 if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])))
                 {
