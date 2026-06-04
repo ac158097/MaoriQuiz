@@ -35,20 +35,23 @@ namespace MaoriQuiz
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
-                Console.WriteLine("Welcome, {0}!\nChoose a difficulty:\nEasy [E] (High Score: {1}, {4}% Correct)\nMedium [M] (High Score: {2}, {5}% Correct)\nHard [H] (High Score: {3}, {6}% Correct)",
+                Console.WriteLine("Welcome, {0}!\nChoose a difficulty:\n{7}Easy [E] (High Score: {1}, {4}% Correct)\n{8}Medium [M] (High Score: {2}, {5}% Correct)\n{9}Hard [H] (High Score: {3}, {6}% Correct)",
                                   name,
                                   GetHighscoreOrZero(highscores, 'E'),
                                   GetHighscoreOrZero(highscores, 'M'),
                                   GetHighscoreOrZero(highscores, 'H'),
                                   Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count()) * 100),
                                   Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count()) * 100),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count()) * 100)
+                                  Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count()) * 100),
+                                  StringHelper.RGBIfy("", (0, 255, 0), reset: false),
+                                  StringHelper.RGBIfy("", (255, 255, 0), reset: false),
+                                  StringHelper.RGBIfy("", (255, 0, 0), reset: false)
                                   );
 
                 //pick a difficulty
                 do
                 {
-                    Console.Write(StringHelper.RGBIfy("Choice: ", (91, 217, 210)));
+                    Console.Write($"{StringHelper.RGBIfy("Choice", (91, 217, 210))}: ");
                     chosenDifficulty = GetQuizQuestions(Console.ReadLine());
                     if (chosenDifficulty.Item2.Count == 0)
                     {
@@ -61,7 +64,7 @@ namespace MaoriQuiz
                 // ask each question
                 for (int i = 0; i < chosenDifficulty.Item2.Count(); i++)
                 {
-                    Console.Write($"Question {i + 1}: ");
+                    Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", (217, 72, 0)));
                     if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
                     else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
                 }
@@ -83,7 +86,7 @@ namespace MaoriQuiz
                 //ask if replaying or not
                 do
                 {
-                    Console.Write($"Would you like to replay (Y/N)?\n{StringHelper.RGBIfy("Option: ", (91, 217, 210))}");
+                    Console.Write($"Would you like to replay (Y/N)?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
                     replaychoice = Console.ReadLine();
                     if (replaychoice.Length == 1)
                     {
@@ -128,7 +131,7 @@ namespace MaoriQuiz
                     'M' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D']),
                         ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D']),
-                        ("What is the longest name of a place in New Zealand?\nA. Taumata­whakatangihanga­koauau­o­tamatea­turi­pukaka­piki­maunga­horo­nuku­pokai­whenua­ki­tana­tahu\nB. Llanfair­pwllgwyngyll­gogery­chwyrn­drobwll­llan­tysilio­gogo­goch\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], []),
+                        ("What is the longest name of a place in New Zealand?\nA. Taumata­whakatangihanga­koauau­o­tamatea­turi­pukaka­piki­maunga­horo­nuku­pokai­whenua­ki­tana­tahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D']),
                         ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C']),
                         ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T']),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], []),
@@ -150,7 +153,7 @@ namespace MaoriQuiz
             Console.WriteLine(questions.Item1);
             do
             {
-                Console.Write(StringHelper.RGBIfy("Answer: ", (91, 217, 210)));
+                Console.Write($"{StringHelper.RGBIfy("Answer", (91, 217, 210))}: ");
                 userInput = Console.ReadLine();
                 if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])))
                 {
@@ -202,7 +205,10 @@ namespace MaoriQuiz
             return resulttext;
         }
 
-        public static void ResetFormatting() { Console.WriteLine("\e[0m"); }
+        public static string ResetFormatting(bool returnInstead) {
+            if (returnInstead) { return "\e[0m";  }
+            else { Console.WriteLine("\e[0m"); return ""; }
+        }
 
         //checks if a name is within 52 chars long, is at least 2 words, doesnt have double spacebars, doesnt have numbers, and any full stops must come after words rather than in or before
         public static bool ValidName(string nameToTest)
