@@ -2,6 +2,7 @@
 
 using System.Text.RegularExpressions;
 using Question = (string, System.Collections.Generic.List<char>, System.Collections.Generic.List<char>);
+using RGBColour = (int, int, int);
 
 namespace MaoriQuiz
 {
@@ -129,11 +130,11 @@ namespace MaoriQuiz
             Console.WriteLine(questions.Item1);
             do
             {
-                Console.Write("Answer: ");
+                Console.Write(StringHelper.RGBIfy("Answer: ", (50, 200 ,25)));
                 userInput = Console.ReadLine();
                 if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])))
                 {
-                    Console.WriteLine("\nInvalid Answer!\n");
+                    Console.WriteLine("Invalid Answer!\n");
                     userInput = "♣";
                 }
             } while (userInput == "♣");
@@ -156,7 +157,7 @@ namespace MaoriQuiz
         method for ansi formatting but somewhat simpler
         */
 
-        public static string Fancify(string stringToApplyTo, bool isBold = false, bool isUnderline = false, int colorNum = 37, bool reset = true)
+        public static string Fancify(string text, bool isBold = false, bool isUnderline = false, int colorNum = 37, bool reset = true)
         {
             string formatting, resetstring;
 
@@ -168,8 +169,10 @@ namespace MaoriQuiz
                 case (true, true): formatting = $"\e[1;{colorNum}m\e[4;{colorNum}m"; break;
             }
             resetstring = (reset == true) ? $"\e[0m" : "";
-            return $"{formatting}{stringToApplyTo}{resetstring}";
+            return $"{formatting}{text}{resetstring}";
         }
+
+        public static string RGBIfy(string text, RGBColour col) => "\x1b[38;2;" + col.Item1 + ";" + col.Item2 + ";" + col.Item3 + "m" + text + "\e[0m";
 
         public static bool ValidName(string nameToTest)
         {
