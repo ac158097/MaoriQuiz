@@ -2,6 +2,7 @@
 
 using System.Text.RegularExpressions;
 using Question = (string, System.Collections.Generic.List<char>, System.Collections.Generic.List<char>);
+using Scoretable = System.Collections.Generic.Dictionary<char, float>;
 using RGBColour = (int, int, int);
 
 namespace MaoriQuiz
@@ -15,14 +16,14 @@ namespace MaoriQuiz
             float score;
             bool replay = false;
             string replaychoice;
-            Dictionary<char, float> highscores = [];
+            Scoretable highscores = [];
             (char, List<Question>) chosenDifficulty;
 
             ConsoleHelper.ClearFullConsole();
             //ask for name
             do
             {
-                Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: false, isUnderline: true, colorNum: 33)} name: ");
+                Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: true, isUnderline: true)} name: ");
                 name = StringHelper.Capitalize(Console.ReadLine().Trim());
                 if (!StringHelper.ValidName(name))
                 {
@@ -34,7 +35,7 @@ namespace MaoriQuiz
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
-                Console.WriteLine("Welcome, {0}!\n\nChoose a difficulty:\nEasy [E] (High Score: {1})\nMedium [M] (High Score: {2})\nHard [H] (High Score: {3})", name, highscores.ContainsKey('E') ? highscores['E'] : 0, highscores.ContainsKey('M') ? highscores['M'] : 0, highscores.ContainsKey('H') ? highscores['H'] : 0);
+                Console.WriteLine("Welcome, {0}!\n\nChoose a difficulty:\nEasy [E] (High Score: {1}, {}%)\nMedium [M] (High Score: {2}, {5}%)\nHard [H] (High Score: {3}, {6}%)", name, GetHighscoreOrZero(highscores, 'E'), GetHighscoreOrZero(highscores, 'M'), GetHighscoreOrZero(highscores, 'H'), Math.Round(GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count()) * 100, Math.Round(GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count()) * 100, Math.Round(GetHighscoreOrZero(highscores, 'H'), GetQuizQuestions("H").Item2.Count()) * 100);
 
                 //pick a difficulty
                 do
@@ -101,6 +102,10 @@ namespace MaoriQuiz
             } while (replay == true);
         }
 
+        static float GetHighscoreOrZero(Scoretable scores, char difficulty) {
+            return scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
+        }
+
         //returns quiz questions
         static (char, List<Question>) GetQuizQuestions(string diffi)
         {
@@ -109,20 +114,21 @@ namespace MaoriQuiz
                 return char.ToUpper(diffi[0]) switch
                 {
                     'E' => (char.ToUpper(diffi[0]), [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['B', 'C', 'D']),
+                        ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D']),
                         ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], [])
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], []),
                     ]),
                     'M' => (char.ToUpper(diffi[0]), [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['B', 'C', 'D']),
-                        ("What is the capital of New Zealand?\nA. Christchurch.\nB. Wellington.\nC. Auckland.\nD. Hamilton", ['B'], ['A', 'C', 'D']),
-                        ("What does aroha mean?\nA. Good.\nB. Terrible.\nC. Effort.\nD. Love.", ['D'], ['A', 'B', 'C']),
+                        ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D']),
+                        ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D']),
+                        ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C']),
                         ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T']),
-                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], [])
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], []),
                     ]),
                     'H' => (char.ToUpper(diffi[0]), [
-                        ("What does kia ora mean?\nA. Hello.\nB. Good Morning.\nC. Good Night.\nD. I'm Hungry.", ['A'], ['B', 'C', 'D']),
-                        ("Did you enjoy?\nY. Yes\nN. No", ['Y'], ['N'])
+                        ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D']),
+                        ("What is the longest name of a place in New Zealand?\nA. Taumata­whakatangihanga­koauau­o­tamatea­turi­pukaka­piki­maunga­horo­nuku­pokai­whenua­ki­tana­tahu\nB. Llanfair­pwllgwyngyll­gogery­chwyrn­drobwll­llan­tysilio­gogo­goch\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], []),
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y'], ['N']),
                     ]),
                     _ => ('♣', [])
                 };
