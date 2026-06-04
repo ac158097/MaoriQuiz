@@ -179,6 +179,7 @@ namespace MaoriQuiz
             return $"{formatting}{text}{resetstring}";
         }
 
+        //colours text by taking rgb input
         public static string RGBIfy(string text, RGBColour col) => "\x1b[38;2;" + col.Item1 + ";" + col.Item2 + ";" + col.Item3 + "m" + text + "\e[0m";
 
         //checks if a name is within 52 chars long, is at least 2 words, doesnt have double spacebars, doesnt have numbers, and any full stops must come after words rather than in or before
