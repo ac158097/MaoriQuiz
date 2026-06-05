@@ -2,8 +2,8 @@
 
 using System.Text.RegularExpressions;
 using Question = (string, System.Collections.Generic.List<char>, System.Collections.Generic.List<char>);
-using Scoredict = System.Collections.Generic.Dictionary<char, float>;
 using RGBColour = (int, int, int);
+using Scoredict = System.Collections.Generic.Dictionary<char, float>;
 
 namespace MaoriQuiz
 {
@@ -27,7 +27,7 @@ namespace MaoriQuiz
                 name = StringHelper.Capitalize(Console.ReadLine().Trim());
                 if (!StringHelper.ValidName(name))
                 {
-                    Console.WriteLine("Not a valid full name!\n");
+                    Console.WriteLine("Not a valid full name.\n");
                 }
             } while (!StringHelper.ValidName(name));
 
@@ -35,7 +35,7 @@ namespace MaoriQuiz
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
-                Console.WriteLine("Welcome, {0}!\nChoose a difficulty:\n{7}Easy [E] (High Score: {1}, {4}% Correct)\n{8}Medium [M] (High Score: {2}, {5}% Correct)\n{9}Hard [H] (High Score: {3}, {6}% Correct)",
+                Console.WriteLine("Welcome, {0}!\nChoose a difficulty:\n{7}Easy [E]\t(High Score: {1}, {4}% Correct)\n{8}Medium [M]\t(High Score: {2}, {5}% Correct)\n{9}Hard [H]\t(High Score: {3}, {6}% Correct)\n{10}Quit [Q]",
                                   name,
                                   GetHighscoreOrZero(highscores, 'E'),
                                   GetHighscoreOrZero(highscores, 'M'),
@@ -45,7 +45,8 @@ namespace MaoriQuiz
                                   Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count()) * 100),
                                   StringHelper.RGBIfy("", (0, 255, 0), reset: false),
                                   StringHelper.RGBIfy("", (255, 255, 0), reset: false),
-                                  StringHelper.RGBIfy("", (255, 0, 0), reset: false)
+                                  StringHelper.RGBIfy("", (255, 0, 0), reset: false),
+                                  StringHelper.RGBIfy("", (123, 0, 217), reset: false)
                                   );
 
                 //pick a difficulty
@@ -55,7 +56,7 @@ namespace MaoriQuiz
                     chosenDifficulty = GetQuizQuestions(Console.ReadLine());
                     if (chosenDifficulty.Item2.Count == 0)
                     {
-                        Console.WriteLine("Invalid choice!\n");
+                        Console.WriteLine("Invalid choice.\n");
                     }
                 } while (chosenDifficulty.Item2.Count == 0);
 
@@ -64,52 +65,65 @@ namespace MaoriQuiz
                 // ask each question
                 for (int i = 0; i < chosenDifficulty.Item2.Count(); i++)
                 {
-                    Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", (217, 72, 0)));
-                    if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
-                    else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
-                }
-
-
-                //quiz score related things
-                Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / chosenDifficulty.Item2.Count()) * 100)}%");
-                if (!highscores.ContainsKey(chosenDifficulty.Item1))
-                {
-                    highscores.Add(chosenDifficulty.Item1, 0);
-                }
-                if (score > highscores[chosenDifficulty.Item1])
-                {
-                    Console.WriteLine("New High Score!");
-                    highscores[chosenDifficulty.Item1] = score;
-                }
-
-
-                //ask if replaying or not
-                do
-                {
-                    Console.Write($"Would you like to replay (Y/N)?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
-                    replaychoice = Console.ReadLine();
-                    if (replaychoice.Length == 1)
+                    if (chosenDifficulty.Item1 != 'Q')
                     {
-                        if (char.ToUpper(replaychoice[0]) == 'Y')
-                        {
-                            replay = true;
-                        }
-                        else if (char.ToUpper(replaychoice[0]) == 'N')
-                        {
-                            replay = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid Option!\n");
-                            replaychoice = "♣";
-                        }
+                        Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", (217, 72, 0)));
+                        if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
+                        else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
                     }
                     else
                     {
-                        Console.WriteLine("Invalid Option!\n");
-                        replaychoice = "♣";
+                        if (AskQuestion(chosenDifficulty.Item2[i])) { Environment.Exit(0); }
                     }
-                } while (replaychoice == "♣");
+                }
+
+
+                //quiz score/highscore related things
+                if (chosenDifficulty.Item1 != 'Q')
+                {
+                    if (!highscores.ContainsKey(chosenDifficulty.Item1))
+                    {
+                        highscores.Add(chosenDifficulty.Item1, 0);
+                    }
+                    if (score > highscores[chosenDifficulty.Item1])
+                    {
+                        Console.WriteLine("New High Score!");
+                        highscores[chosenDifficulty.Item1] = score;
+                    }
+                    Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / chosenDifficulty.Item2.Count()) * 100)}%");
+
+
+                    //ask if replaying or not
+                    do
+                    {
+                        Console.Write($"Would you like to replay (Y/N)?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
+                        replaychoice = Console.ReadLine();
+                        if (replaychoice.Length == 1)
+                        {
+                            if (char.ToUpper(replaychoice[0]) == 'Y')
+                            {
+                                replay = true;
+                            }
+                            else if (char.ToUpper(replaychoice[0]) == 'N')
+                            {
+                                replay = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Option.\n");
+                                replaychoice = "♣";
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Option.\n");
+                            replaychoice = "♣";
+                        }
+                    } while (replaychoice == "♣");
+                }
+                else {
+                    replay = true;
+                }
             } while (replay == true);
         }
 
@@ -140,6 +154,9 @@ namespace MaoriQuiz
                         ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D']),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y'], ['N']),
                     ]),
+                    'Q' => (char.ToUpper(diffi[0]), [
+                        ("Really Quit?", ['Y'], ['N'])
+                        ]),
                     _ => ('♣', [])
                 };
             }
@@ -157,7 +174,7 @@ namespace MaoriQuiz
                 userInput = Console.ReadLine();
                 if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])))
                 {
-                    Console.WriteLine("Invalid Answer!\n");
+                    Console.WriteLine("Invalid Answer.\n");
                     userInput = "♣";
                 }
             } while (userInput == "♣");
@@ -196,7 +213,8 @@ namespace MaoriQuiz
         }
 
         //colours text by taking rgb input
-        public static string RGBIfy(string text, RGBColour col, bool reset = true) {
+        public static string RGBIfy(string text, RGBColour col, bool reset = true)
+        {
             string resulttext = "\x1b[38;2;" + col.Item1 + ";" + col.Item2 + ";" + col.Item3 + "m" + text;
             if (reset == true)
             {
@@ -205,8 +223,9 @@ namespace MaoriQuiz
             return resulttext;
         }
 
-        public static string ResetFormatting(bool returnInstead) {
-            if (returnInstead) { return "\e[0m";  }
+        public static string ResetFormatting(bool returnInstead)
+        {
+            if (returnInstead) { return "\e[0m"; }
             else { Console.WriteLine("\e[0m"); return ""; }
         }
 
