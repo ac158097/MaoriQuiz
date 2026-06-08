@@ -111,15 +111,13 @@ namespace MaoriQuiz
                             else
                             {
                                 Console.WriteLine("Invalid Option.\n");
-                                replaychoice = "♣";
                             }
                         }
                         else
                         {
                             Console.WriteLine("Invalid Option.\n");
-                            replaychoice = "♣";
                         }
-                    } while (replaychoice == "♣");
+                    } while (!new List<string> { "Y", "N" }.Contains(replaychoice));
                 }
                 else {
                     replay = true;
@@ -175,9 +173,8 @@ namespace MaoriQuiz
                 if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])))
                 {
                     Console.WriteLine("Invalid Answer.\n");
-                    userInput = "♣";
                 }
-            } while (userInput == "♣");
+            } while (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])));
             return questions.Item2.Contains(char.ToUpper(userInput[0]));
         }
     }
