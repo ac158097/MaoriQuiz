@@ -1,9 +1,10 @@
 ﻿#nullable disable
 
 using System.Text.RegularExpressions;
-using Question = (string, System.Collections.Generic.List<char>, System.Collections.Generic.List<char>, float);
+
+using Question = (string QuestionString, System.Collections.Generic.List<char> CorrectAnswers, System.Collections.Generic.List<char> IncorrectAnswers, float Points);
 // questions, answer chars, incorrect chars, points awarded for correct
-using RGBColour = (int, int, int);
+using RGBColour = (int R, int G, int B);
 using Scoredict = System.Collections.Generic.Dictionary<char, float>;
 
 namespace MaoriQuiz
@@ -65,13 +66,14 @@ namespace MaoriQuiz
                 ConsoleHelper.ClearFullConsole();
 
                 // ask each question
-                for (int i = 0; i < chosenDifficulty.Item2.Count(); i++)
+                for (int i = 0; i < chosenDifficulty.Item2.Count; i++)
                 {
                     if (chosenDifficulty.Item1 != 'Q')
                     {
                         Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", (217, 72, 0)));
-                        if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score++; }
+                        if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score += chosenDifficulty.Item2[i].Points; }
                         else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
+                        Console.WriteLine();
                     }
                     else
                     {
@@ -92,7 +94,7 @@ namespace MaoriQuiz
                         Console.WriteLine("New High Score!");
                         highscores[chosenDifficulty.Item1] = score;
                     }
-                    Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / chosenDifficulty.Item2.Count()) * 100)}%");
+                    Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / chosenDifficulty.Item2.Count) * 100)}%");
 
 
                     //ask if replaying or not
@@ -121,7 +123,8 @@ namespace MaoriQuiz
                         }
                     } while (!(new List<string> { "Y", "N" }.Contains(replaychoice)));
                 }
-                else {
+                else
+                {
                     replay = true;
                 }
             } while (replay == true);
@@ -167,16 +170,16 @@ namespace MaoriQuiz
         static bool AskQuestion(Question questions)
         {
             string userInput;
-            Console.WriteLine(questions.Item1);
+            Console.WriteLine(questions.QuestionString);
             do
             {
                 Console.Write($"{StringHelper.RGBIfy("Answer", (91, 217, 210))}: ");
                 userInput = Console.ReadLine();
-                if (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])))
+                if (userInput.Length != 1 || !questions.IncorrectAnswers.Contains(char.ToUpper(userInput[0])) && !questions.CorrectAnswers.Contains(char.ToUpper(userInput[0])))
                 {
                     Console.WriteLine("Invalid Answer.\n");
                 }
-            } while (userInput.Length != 1 || !questions.Item3.Contains(char.ToUpper(userInput[0])) && !questions.Item2.Contains(char.ToUpper(userInput[0])));
+            } while (userInput.Length != 1 || !(questions.IncorrectAnswers.Contains(char.ToUpper(userInput[0])) || questions.CorrectAnswers.Contains(char.ToUpper(userInput[0]))));
             return questions.Item2.Contains(char.ToUpper(userInput[0]));
         }
     }
@@ -214,7 +217,7 @@ namespace MaoriQuiz
         //colours text by taking rgb input
         public static string RGBIfy(string text, RGBColour col, bool reset = true)
         {
-            string resulttext = "\x1b[38;2;" + col.Item1 + ";" + col.Item2 + ";" + col.Item3 + "m" + text;
+            string resulttext = "\x1b[38;2;" + col.R + ";" + col.G + ";" + col.B + "m" + text;
             if (reset == true)
             {
                 resulttext += "\e[0m";
@@ -236,7 +239,7 @@ namespace MaoriQuiz
             if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 52 && nameToTest.Contains(" "))
             {
                 int count = nameToTest.Count(c => c == ' ');
-                if (count + 1 == nameRegex.Matches(nameToTest).Count()) { return true; }
+                if (count + 1 == nameRegex.Matches(nameToTest).Count) { return true; }
             }
             return false;
         }
