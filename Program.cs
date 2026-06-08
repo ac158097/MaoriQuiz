@@ -155,7 +155,7 @@ namespace MaoriQuiz
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y'], ['N']),
                     ]),
                     'Q' => (char.ToUpper(diffi[0]), [
-                        ("Really Quit?", ['Y'], ['N'])
+                        ("Really Quit? (Y/N)", ['Y'], ['N'])
                         ]),
                     _ => ('♣', [])
                 };
