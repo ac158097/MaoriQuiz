@@ -99,14 +99,14 @@ namespace MaoriQuiz
                     do
                     {
                         Console.Write($"Would you like to replay (Y/N)?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
-                        replaychoice = Console.ReadLine();
+                        replaychoice = Console.ReadLine().ToUpper();
                         if (replaychoice.Length == 1)
                         {
-                            if (char.ToUpper(replaychoice[0]) == 'Y')
+                            if (replaychoice[0] == 'Y')
                             {
                                 replay = true;
                             }
-                            else if (char.ToUpper(replaychoice[0]) == 'N')
+                            else if (replaychoice[0] == 'N')
                             {
                                 replay = false;
                             }
@@ -119,7 +119,7 @@ namespace MaoriQuiz
                         {
                             Console.WriteLine("Invalid Option.\n");
                         }
-                    } while (!new List<string> { "Y", "N" }.Contains(replaychoice));
+                    } while (!(new List<string> { "Y", "N" }.Contains(replaychoice)));
                 }
                 else {
                     replay = true;
