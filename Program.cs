@@ -42,9 +42,9 @@ namespace MaoriQuiz
                                   GetHighscoreOrZero(highscores, 'E'),
                                   GetHighscoreOrZero(highscores, 'M'),
                                   GetHighscoreOrZero(highscores, 'H'),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count()) * 100),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count()) * 100),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count()) * 100),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count) * 100),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count) * 100),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count) * 100),
                                   StringHelper.RGBIfy("", (0, 255, 0), reset: false),
                                   StringHelper.RGBIfy("", (255, 255, 0), reset: false),
                                   StringHelper.RGBIfy("", (255, 0, 0), reset: false),
@@ -222,6 +222,7 @@ namespace MaoriQuiz
             return resulttext;
         }
 
+        //resets formatting, either by outputting reset code or by returning the reset code to something
         public static string ResetFormatting(bool returnInstead)
         {
             if (returnInstead) { return "\e[0m"; }
