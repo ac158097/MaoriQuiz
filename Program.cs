@@ -38,7 +38,7 @@ namespace MaoriQuiz
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
                 //print difficulties, highscores, and what percent of questions were right from highscore
-                Console.WriteLine("Welcome, {0}!\nChoose a difficulty:\n{7}Easy [E]\t(High Score: {1}, {4}% Correct)\n{8}Medium [M]\t(High Score: {2}, {5}% Correct)\n{9}Hard [H]\t(High Score: {3}, {6}% Correct)\n{10}Quit [Q]",
+                Console.WriteLine("Welcome, {0}!\nChoose a difficulty:\n{7}Easy [E]\t(High Score: {1}, {4}% Correct)\n{8}Medium [M]\t(High Score: {2}, {5}% Correct)\n{9}Hard [H]\t(High Score: {3}, {6}% Correct){11}\n{10}Quit [Q]",
                                   name,
                                   GetHighscoreOrZero(highscores, 'E'),
                                   GetHighscoreOrZero(highscores, 'M'),
@@ -49,7 +49,8 @@ namespace MaoriQuiz
                                   StringHelper.RGBIfy("", (0, 255, 0), reset: false),
                                   StringHelper.RGBIfy("", (255, 255, 0), reset: false),
                                   StringHelper.RGBIfy("", (255, 0, 0), reset: false),
-                                  StringHelper.RGBIfy("", (123, 0, 217), reset: false)
+                                  StringHelper.RGBIfy("", (123, 0, 217), reset: false),
+                                  (highscores.ContainsKey('S')) ? $"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetQuizQuestions("S").Item2.Count) * 100)}% Correct)" : ""
                                   );
 
                 //pick a difficulty
@@ -71,8 +72,8 @@ namespace MaoriQuiz
                     if (chosenDifficulty.Item1 != 'Q')
                     {
                         Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", (217, 72, 0)));
-                        if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}\n"); score += chosenDifficulty.Item2[i].Points; }
-                        else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}\n");
+                        if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}"); score += chosenDifficulty.Item2[i].Points; }
+                        else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}");
                         Console.WriteLine();
                     }
                     else
@@ -100,7 +101,7 @@ namespace MaoriQuiz
                     //ask if replaying or not
                     do
                     {
-                        Console.Write($"Would you like to replay (Y/N)?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
+                        Console.Write($"Would you like to replay [Y/N]?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
                         replaychoice = Console.ReadLine().ToUpper();
                         if (replaychoice.Length == 1)
                         {
@@ -155,6 +156,10 @@ namespace MaoriQuiz
                     ]),
                     'H' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
+                        ("Did you enjoy?\nY. Yes\nN. No", ['Y'], ['N'], 1),
+                    ]),
+                    'S' => (char.ToUpper(diffi[0]), [
+                        ("Which of these people helped translate the Treaty of Waitangi?\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'D'], 1),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y'], ['N'], 1),
                     ]),
                     'Q' => (char.ToUpper(diffi[0]), [
@@ -228,7 +233,7 @@ namespace MaoriQuiz
         //resets formatting, either by outputting reset code or by returning the reset code to something
         public static string ResetFormatting(bool returnInstead)
         {
-            if (returnInstead) { return "\e[0m"; }
+            if (returnInstead) return "\e[0m";
             else { Console.WriteLine("\e[0m"); return ""; }
         }
 
