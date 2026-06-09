@@ -50,7 +50,10 @@ namespace MaoriQuiz
                                   StringHelper.RGBIfy("", (255, 255, 0), reset: false),
                                   StringHelper.RGBIfy("", (255, 0, 0), reset: false),
                                   StringHelper.RGBIfy("", (123, 0, 217), reset: false),
-                                  (highscores.ContainsKey('S')) ? $"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetQuizQuestions("S").Item2.Count) * 100)}% Correct)" : ""
+                                  //$"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count) * 100)}% Correct)"
+                                  //$"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count) * 100)}% Correct)"
+                                  //$"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count) * 100)}% Correct)"
+                                  (highscores.ContainsKey('S')) ? $"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)" : ""
                                   );
 
                 //pick a difficulty
@@ -188,9 +191,11 @@ namespace MaoriQuiz
             return questions.Item2.Contains(char.ToUpper(userInput[0]));
         }
 
-        static float GetTotalQuizPoints(List<Question> questions) {
+        static float GetTotalQuizPoints(List<Question> questions)
+        {
             float total = 0;
-            foreach (Question questio in questions) {
+            foreach (Question questio in questions)
+            {
                 total += questio.Points;
             }
             return total;
