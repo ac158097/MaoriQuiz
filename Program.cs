@@ -43,9 +43,9 @@ namespace MaoriQuiz
                                   GetHighscoreOrZero(highscores, 'E'),
                                   GetHighscoreOrZero(highscores, 'M'),
                                   GetHighscoreOrZero(highscores, 'H'),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count) * 100),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count) * 100),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count) * 100),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100),
+                                  Math.Round((GetHighscoreOrZero(highscores, 'H') / GetTotalQuizPoints(GetQuizQuestions("H").Item2)) * 100),
                                   StringHelper.RGBIfy("", (0, 255, 0), reset: false),
                                   StringHelper.RGBIfy("", (255, 255, 0), reset: false),
                                   StringHelper.RGBIfy("", (255, 0, 0), reset: false),
@@ -95,7 +95,7 @@ namespace MaoriQuiz
                         Console.WriteLine("New High Score!");
                         highscores[chosenDifficulty.Item1] = score;
                     }
-                    Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / chosenDifficulty.Item2.Count) * 100)}%");
+                    Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / GetTotalQuizPoints(chosenDifficulty.Item2)) * 100)}%");
 
 
                     //ask if replaying or not
@@ -186,6 +186,14 @@ namespace MaoriQuiz
                 }
             } while (userInput.Length != 1 || !(questions.IncorrectAnswers.Contains(char.ToUpper(userInput[0])) || questions.CorrectAnswers.Contains(char.ToUpper(userInput[0]))));
             return questions.Item2.Contains(char.ToUpper(userInput[0]));
+        }
+
+        static float GetTotalQuizPoints(List<Question> questions) {
+            float total = 0;
+            foreach (Question questio in questions) {
+                total += questio.Points;
+            }
+            return total;
         }
     }
 
