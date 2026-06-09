@@ -31,28 +31,23 @@ namespace MaoriQuiz
                 {
                     Console.WriteLine("Not a valid full name.\n");
                 }
-            } while (!StringHelper.ValidName(name));
+            } while (!StringHelper.ValidName(name));    
 
             do
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
                 //print difficulties, highscores, and what percent of questions were right from highscore
-                Console.WriteLine("Welcome, {0}!\nChoose a difficulty:\n{7}Easy [E]\t(High Score: {1}, {4}% Correct)\n{8}Medium [M]\t(High Score: {2}, {5}% Correct)\n{9}Hard [H]\t(High Score: {3}, {6}% Correct){11}\n{10}Quit [Q]",
+                Console.WriteLine("""
+                    Welcome, {0}!
+                    Choose a difficulty:{2}{3}{4}{5}
+                    {1}Quit [Q]
+                    """,
                                   name,
-                                  GetHighscoreOrZero(highscores, 'E'),
-                                  GetHighscoreOrZero(highscores, 'M'),
-                                  GetHighscoreOrZero(highscores, 'H'),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100),
-                                  Math.Round((GetHighscoreOrZero(highscores, 'H') / GetTotalQuizPoints(GetQuizQuestions("H").Item2)) * 100),
-                                  StringHelper.RGBIfy("", (0, 255, 0), reset: false),
-                                  StringHelper.RGBIfy("", (255, 255, 0), reset: false),
-                                  StringHelper.RGBIfy("", (255, 0, 0), reset: false),
                                   StringHelper.RGBIfy("", (123, 0, 217), reset: false),
-                                  //$"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count) * 100)}% Correct)"
-                                  //$"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count) * 100)}% Correct)"
-                                  //$"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count) * 100)}% Correct)"
+                                  $"\n{StringHelper.RGBIfy("", (0, 255, 0), reset: false)}Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count) * 100)}% Correct)",
+                                  $"\n{StringHelper.RGBIfy("", (255, 255, 0), reset: false)}Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count) * 100)}% Correct)",
+                                  $"\n{StringHelper.RGBIfy("", (255, 0, 0), reset: false)}Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count) * 100)}% Correct)",
                                   (highscores.ContainsKey('S')) ? $"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)" : ""
                                   );
 
