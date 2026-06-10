@@ -1,7 +1,6 @@
 ﻿#nullable disable
 
 using System.Text.RegularExpressions;
-using System.Linq;
 
 using Question = (string QuestionString, System.Collections.Generic.List<char> CorrectAnswers, System.Collections.Generic.List<char> IncorrectAnswers, float Points);
 // questions, answer chars, incorrect chars, points awarded for correct
@@ -15,7 +14,6 @@ namespace MaoriQuiz
         static void Main(/*string[] args*/)
         {
             //initialize vars
-            var rnd = new Random();
             string name;
             bool isCorrect;
             float score;
@@ -147,35 +145,52 @@ namespace MaoriQuiz
         //returns quiz questions
         static (char, List<Question>) GetQuizQuestions(string diffi)
         {
+            var rnd = new Random();
+            List<Question> theQuiz = [];
+
             if (diffi.Length == 1)
             {
-                return char.ToUpper(diffi[0]) switch
+                switch (char.ToUpper(diffi[0]))
                 {
-                    'E' => (char.ToUpper(diffi[0]), [
-                        ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
-                        ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'C', 'D'], 1),
-                        ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
-                    ]),
-                    'M' => (char.ToUpper(diffi[0]), [
-                        ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
-                        ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D'], 1),
-                        ("What is the longest name of a place in New Zealand?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
-                        ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
-                        //not entirely related to maori but rather just nz ("What year were phones banned from schools in New Zealand?\nA. 2027\nB. 2025\nC. 2024\nD. 2017", ['C'], ['A', 'B', 'D'], 1),
-                        ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
-                    ]),
-                    'H' => (char.ToUpper(diffi[0]), [
-                        ("Which of these bird is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
-                        ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
-                    ]),
-                    'S' => (char.ToUpper(diffi[0]), [
-                        ("Which of these people helped translate the Treaty of Waitangi?\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'D'], 1),
-                    ]),
-                    'Q' => (char.ToUpper(diffi[0]), [
+                    case 'E':
+                        theQuiz = [
+                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
+                            ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'C', 'D'], 1),
+                            ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
+                        ];
+                        return (char.ToUpper(diffi[0]), theQuiz.OrderBy(item => rnd.Next()).ToList());
+
+                    case 'M':
+                        theQuiz = [
+                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
+                            ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D'], 1),
+                            ("What is the longest name of a place in New Zealand?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
+                            ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
+                            //not entirely related to maori but rather just nz ("What year were phones banned from schools in New Zealand?\nA. 2027\nB. 2025\nC. 2024\nD. 2017", ['C'], ['A', 'B', 'D'], 1),
+                            ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
+                        ];
+                        return (char.ToUpper(diffi[0]), theQuiz.OrderBy(item => rnd.Next()).ToList());
+
+                    case 'H':
+                        theQuiz = [
+                            ("Which of these bird is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
+                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
+                        ];
+                        return (char.ToUpper(diffi[0]), theQuiz.OrderBy(item => rnd.Next()).ToList());
+
+                    case 'S':
+                        theQuiz = [
+                            ("Which of these people helped translate the Treaty of Waitangi?\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'D'], 1),
+                        ];
+                        return (char.ToUpper(diffi[0]), theQuiz.OrderBy(item => rnd.Next()).ToList());
+
+                    case 'Q':
+                        return (char.ToUpper(diffi[0]), [
                         ("Really Quit? (Y/N)", ['Y'], ['N'], 1)
-                    ]),
-                    _ => ('♣', [])
-                };
+                        ]);
+                    default: return ('♣', []);
+                }
+                ;
             }
             return ('♣', []);
         }
