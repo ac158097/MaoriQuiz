@@ -17,13 +17,12 @@ namespace MaoriQuiz
             //initialize vars
             var rnd = new Random();
             string name;
+            bool isCorrect;
             float score;
             bool replay = false;
             string replaychoice;
             Scoredict highscores = [];
             (char, List<Question>) chosenDifficulty;
-            List<int> questionpool = Enumerable.Range(0, 10).ToList();
-
             ConsoleHelper.ClearFullConsole();
             //ask for name
             do
@@ -48,9 +47,9 @@ namespace MaoriQuiz
                     """,
                                   name,
                                   StringHelper.RGBIfy("", (123, 0, 217), reset: false),
-                                  $"\n{StringHelper.RGBIfy("", (0, 255, 0), reset: false)}Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetQuizQuestions("E").Item2.Count) * 100)}% Correct)",
-                                  $"\n{StringHelper.RGBIfy("", (255, 255, 0), reset: false)}Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetQuizQuestions("M").Item2.Count) * 100)}% Correct)",
-                                  $"\n{StringHelper.RGBIfy("", (255, 0, 0), reset: false)}Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetQuizQuestions("H").Item2.Count) * 100)}% Correct)",
+                                  $"\n{StringHelper.RGBIfy("", (0, 255, 0), reset: false)}Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)",
+                                  $"\n{StringHelper.RGBIfy("", (255, 255, 0), reset: false)}Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)",
+                                  $"\n{StringHelper.RGBIfy("", (255, 0, 0), reset: false)}Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetTotalQuizPoints(GetQuizQuestions("H").Item2)) * 100)}% Correct)",
                                   (highscores.ContainsKey('S')) ? $"\n{StringHelper.RGBIfy("", (199, 0, 255), reset: false)}Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)" : ""
                                   );
 
@@ -73,15 +72,19 @@ namespace MaoriQuiz
                     if (chosenDifficulty.Item1 != 'Q')
                     {
                         Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", (217, 72, 0)));
-                        if (AskQuestion(chosenDifficulty.Item2[i])) { Console.Write(StringHelper.Fancify("Correct!\nCorrect Answer(s): ", colorNum: 32)); score += chosenDifficulty.Item2[i].Points; }
-                        else Console.Write(StringHelper.Fancify("Incorrect!\nCorrect Answer(s): ", colorNum: 31));
-                        Console.Write("[");
-                        for (int j = 0; j < chosenDifficulty.Item2[i].CorrectAnswers.Count; j++)
+                        isCorrect = AskQuestion(chosenDifficulty.Item2[i]);
+                        if (isCorrect) { Console.WriteLine(StringHelper.Fancify("Correct!\n", colorNum: 32)); score += chosenDifficulty.Item2[i].Points; }
+                        else Console.Write(StringHelper.Fancify("Incorrect!\n", colorNum: 31));
+                        if (!isCorrect || chosenDifficulty.Item2[i].CorrectAnswers.Count > 1)
                         {
-                            Console.Write($"{chosenDifficulty.Item2[i].CorrectAnswers[j]}");
-                            if (j != chosenDifficulty.Item2[i].CorrectAnswers.Count - 1) { Console.Write(", "); }
+                            Console.Write($"{StringHelper.RGBIfy("Correct Answer(s)", (255, 255, 0))}: [");
+                            for (int j = 0; j < chosenDifficulty.Item2[i].CorrectAnswers.Count; j++)
+                            {
+                                Console.Write($"{chosenDifficulty.Item2[i].CorrectAnswers[j]}");
+                                if (j != chosenDifficulty.Item2[i].CorrectAnswers.Count - 1) { Console.Write(", "); }
+                            }
+                            Console.WriteLine("]\n");
                         }
-                        Console.WriteLine("]\n");
                     }
                     else
                     {
@@ -150,6 +153,7 @@ namespace MaoriQuiz
                 {
                     'E' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
+                        ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'C', 'D'], 1),
                         ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
                     ]),
                     'M' => (char.ToUpper(diffi[0]), [
@@ -190,7 +194,7 @@ namespace MaoriQuiz
                     Console.WriteLine("Invalid Answer.\n");
                 }
             } while (userInput.Length != 1 || !(questions.IncorrectAnswers.Contains(char.ToUpper(userInput[0])) || questions.CorrectAnswers.Contains(char.ToUpper(userInput[0]))));
-            return questions.Item2.Contains(char.ToUpper(userInput[0]));
+            return questions.CorrectAnswers.Contains(char.ToUpper(userInput[0]));
         }
 
         static float GetTotalQuizPoints(List<Question> questions)
