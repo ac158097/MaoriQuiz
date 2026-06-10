@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using System.Text.RegularExpressions;
+using System.Linq;
 
 using Question = (string QuestionString, System.Collections.Generic.List<char> CorrectAnswers, System.Collections.Generic.List<char> IncorrectAnswers, float Points);
 // questions, answer chars, incorrect chars, points awarded for correct
@@ -14,12 +15,14 @@ namespace MaoriQuiz
         static void Main(/*string[] args*/)
         {
             //initialize vars
+            var rnd = new Random();
             string name;
             float score;
             bool replay = false;
             string replaychoice;
             Scoredict highscores = [];
             (char, List<Question>) chosenDifficulty;
+            List<int> questionpool = Enumerable.Range(0, 10).ToList();
 
             ConsoleHelper.ClearFullConsole();
             //ask for name
