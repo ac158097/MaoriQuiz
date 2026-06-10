@@ -34,7 +34,7 @@ namespace MaoriQuiz
                 {
                     Console.WriteLine("Not a valid full name.\n");
                 }
-            } while (!StringHelper.ValidName(name));    
+            } while (!StringHelper.ValidName(name));
 
             do
             {
@@ -76,7 +76,8 @@ namespace MaoriQuiz
                         if (AskQuestion(chosenDifficulty.Item2[i])) { Console.Write(StringHelper.Fancify("Correct!\nCorrect Answer(s): ", colorNum: 32)); score += chosenDifficulty.Item2[i].Points; }
                         else Console.Write(StringHelper.Fancify("Incorrect!\nCorrect Answer(s): ", colorNum: 31));
                         Console.Write("[");
-                        for (int j = 0; j < chosenDifficulty.Item2[i].CorrectAnswers.Count; j++) {
+                        for (int j = 0; j < chosenDifficulty.Item2[i].CorrectAnswers.Count; j++)
+                        {
                             Console.Write($"{chosenDifficulty.Item2[i].CorrectAnswers[j]}");
                             if (j != chosenDifficulty.Item2[i].CorrectAnswers.Count - 1) { Console.Write(", "); }
                         }
@@ -154,7 +155,7 @@ namespace MaoriQuiz
                     'M' => (char.ToUpper(diffi[0]), [
                         ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
                         ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D'], 1),
-                        ("What is the longest name of a place in New Zealand?\nA. Taumata­whakatangihanga­koauau­o­tamatea­turi­pukaka­piki­maunga­horo­nuku­pokai­whenua­ki­tana­tahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
+                        ("What is the longest name of a place in New Zealand?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
                         ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
                         //not entirely related to maori but rather just nz ("What year were phones banned from schools in New Zealand?\nA. 2027\nB. 2025\nC. 2024\nD. 2017", ['C'], ['A', 'B', 'D'], 1),
                         ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
