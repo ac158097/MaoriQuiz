@@ -158,7 +158,7 @@ namespace MaoriQuiz
                             ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'C', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), theQuiz.OrderBy(item => rnd.Next()).ToList());
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
 
                     case 'M':
                         theQuiz = [
@@ -169,20 +169,20 @@ namespace MaoriQuiz
                             //not entirely related to maori but rather just nz ("What year were phones banned from schools in New Zealand?\nA. 2027\nB. 2025\nC. 2024\nD. 2017", ['C'], ['A', 'B', 'D'], 1),
                             ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), theQuiz.OrderBy(item => rnd.Next()).ToList());
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
 
                     case 'H':
                         theQuiz = [
                             ("Which of these bird is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
                             ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), theQuiz.OrderBy(item => rnd.Next()).ToList());
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
 
                     case 'S':
                         theQuiz = [
                             ("Which of these people helped translate the Treaty of Waitangi?\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'D'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), theQuiz.OrderBy(item => rnd.Next()).ToList());
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
 
                     case 'Q':
                         return (char.ToUpper(diffi[0]), [
