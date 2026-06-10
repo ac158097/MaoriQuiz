@@ -70,9 +70,14 @@ namespace MaoriQuiz
                     if (chosenDifficulty.Item1 != 'Q')
                     {
                         Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", (217, 72, 0)));
-                        if (AskQuestion(chosenDifficulty.Item2[i])) { Console.WriteLine($"{StringHelper.Fancify("Correct!", colorNum: 32)}"); score += chosenDifficulty.Item2[i].Points; }
-                        else Console.WriteLine($"{StringHelper.Fancify("Incorrect!", colorNum: 31)}");
-                        Console.WriteLine();
+                        if (AskQuestion(chosenDifficulty.Item2[i])) { Console.Write(StringHelper.Fancify("Correct!\nCorrect Answer(s): ", colorNum: 32)); score += chosenDifficulty.Item2[i].Points; }
+                        else Console.Write(StringHelper.Fancify("Incorrect!\nCorrect Answer(s): ", colorNum: 31));
+                        Console.Write("[");
+                        for (int j = 0; j < chosenDifficulty.Item2[i].CorrectAnswers.Count; j++) {
+                            Console.Write($"{chosenDifficulty.Item2[i].CorrectAnswers[j]}");
+                            if (j != chosenDifficulty.Item2[i].CorrectAnswers.Count - 1) { Console.Write(", "); }
+                        }
+                        Console.WriteLine("]\n");
                     }
                     else
                     {
@@ -149,6 +154,7 @@ namespace MaoriQuiz
                         ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D'], 1),
                         ("What is the longest name of a place in New Zealand?\nA. Taumata­whakatangihanga­koauau­o­tamatea­turi­pukaka­piki­maunga­horo­nuku­pokai­whenua­ki­tana­tahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
                         ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
+                        ("What year were phones banned from schools in New Zealand?\nA. 2027\nB. 2025\nC. 2024\nD. 2017", ['C'], ['A', 'B', 'D'], 1),
                         ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
                         ("Did you enjoy?\nY. Yes\nN. No", ['Y', 'N'], [], 1),
                     ]),
