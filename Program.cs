@@ -155,7 +155,7 @@ namespace MaoriQuiz
                     case 'E':
                         theQuiz = [
                             ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
-                            ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'C', 'D'], 1),
+                            ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
                         ];
                         return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
