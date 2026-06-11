@@ -139,7 +139,7 @@ namespace MaoriQuiz
                 {
                     replay = true;
                 }
-            } while (replay == true);
+            } while (replay);
         }
 
         //return a high score, if there is none, return zero
@@ -177,7 +177,7 @@ namespace MaoriQuiz
                     case 'H':
                         theQuiz = [
                             ("Which of these bird is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
-                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
+                            ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['A'], ['B', 'C', 'D'], 1),
                         ];
                         return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
 
@@ -215,6 +215,7 @@ namespace MaoriQuiz
             return questions.CorrectAnswers.Contains(char.ToUpper(userInput[0]));
         }
 
+        //returns the amount of points you can possibly get from one quiz
         static float GetTotalQuizPoints(List<Question> questions)
         {
             float total = 0;
@@ -226,6 +227,7 @@ namespace MaoriQuiz
         }
     }
 
+    //class for functions to help with strings
     public static class StringHelper
     {
         /*
@@ -252,7 +254,7 @@ namespace MaoriQuiz
                 case (false, true): formatting = $"\e[4;{colorNum}m"; break;
                 case (true, true): formatting = $"\e[1;{colorNum}m\e[4;{colorNum}m"; break;
             }
-            resetstring = (reset == true) ? $"\e[0m" : "";
+            resetstring = (reset) ? $"\e[0m" : "";
             return $"{formatting}{text}{resetstring}";
         }
 
@@ -260,7 +262,7 @@ namespace MaoriQuiz
         public static string RGBIfy(string text, RGBColour col, bool reset = true)
         {
             string resulttext = "\x1b[38;2;" + col.R + ";" + col.G + ";" + col.B + "m" + text;
-            if (reset == true)
+            if (reset)
             {
                 resulttext += "\e[0m";
             }
@@ -296,9 +298,10 @@ namespace MaoriQuiz
             });
     }
 
-    //clears console (do i have to explain)
+    //class which is kind of unnecessary
     public static class ConsoleHelper
     {
+        //clears console (do i have to explain)
         public static void ClearFullConsole()
         {
             Console.Clear();
