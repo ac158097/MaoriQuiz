@@ -165,9 +165,8 @@ namespace MaoriQuiz
 
                     case 'M':
                         theQuiz = [
-                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
                             ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D'], 1),
-                            ("What is the longest name of a place in New Zealand?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
+                            ("Which of these is a place in New Zealand and has the longest name?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
                             ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
                             //not entirely related to maori but rather just nz ("What year were phones banned from schools in New Zealand?\nA. 2027\nB. 2025\nC. 2024\nD. 2017", ['C'], ['A', 'B', 'D'], 1),
                             ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
