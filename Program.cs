@@ -48,9 +48,9 @@ namespace MaoriQuiz
                     """,
                     name,
                     StringHelper.RGBIfy("Quit [Q]", (123, 0, 217), reset: true),
-                    StringHelper.RGBIfy($"Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)", (0, 255, 0), reset: true),
-                    StringHelper.RGBIfy($"Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)", (255, 255, 0), reset: true),
-                    StringHelper.RGBIfy($"Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetTotalQuizPoints(GetQuizQuestions("H").Item2)) * 100)}% Correct)", (255, 0, 0), reset: true),
+                    StringHelper.RGBIfy($"Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}/{GetTotalQuizPoints(GetQuizQuestions("E").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)", (0, 255, 0), reset: true),
+                    StringHelper.RGBIfy($"Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}/{GetTotalQuizPoints(GetQuizQuestions("M").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)", (255, 255, 0), reset: true),
+                    StringHelper.RGBIfy($"Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}/{GetTotalQuizPoints(GetQuizQuestions("H").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetTotalQuizPoints(GetQuizQuestions("H").Item2)) * 100)}% Correct)", (255, 0, 0), reset: true),
                     (highscores.ContainsKey('S')) ? StringHelper.RGBIfy($"Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)\n", (199, 0, 255), reset: true) : ""
                 );
 
