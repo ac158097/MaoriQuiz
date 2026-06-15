@@ -148,7 +148,7 @@ namespace MaoriQuiz
         //returns quiz questions
         static (char, List<Question>) GetQuizQuestions(string diffi)
         {
-            var rnd = new Random();
+            var rnd = new Random(); // so that rnd.Next works later when shuffling questions before return
             List<Question> theQuiz = [];
 
             if (diffi.Length == 1)
@@ -176,10 +176,15 @@ namespace MaoriQuiz
                         theQuiz = [
                             ("Which of these bird is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
                             ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['A'], ['B', 'C', 'D'], 1),
+                            ("What is the Maori word for door?\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'C', 'D'], 1),
+                            ("What is the Maori word for stage?\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['A', 'C', 'D'], 1),
+                            ("What does koura translate to?\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'D'], 1),
+                            ("What does pepa translate to?\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C'], 1),
                         ];
                         return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
 
                     case 'S':
+                        //these are the questions for the secret difficulty
                         theQuiz = [
                             ("Which of these people helped translate the Treaty of Waitangi?\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'D'], 1),
                         ];
