@@ -176,7 +176,7 @@ namespace MaoriQuiz
                         theQuiz = [
                             ("Which of these bird is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
                             ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['A'], ['B', 'C', 'D'], 1),
-                            ("What is the Maori word for door?\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'C', 'D'], 1),
+                            ("(Worth double points) What is the Maori word for door?\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'C', 'D'], 2),
                             ("What is the Maori word for stage?\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['A', 'C', 'D'], 1),
                             ("What does koura translate to?\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'D'], 1),
                             ("What does pepa translate to?\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C'], 1),
