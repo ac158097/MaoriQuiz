@@ -160,6 +160,7 @@ namespace MaoriQuiz
                             ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
                             ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
+                            ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C'], 1),
                         ];
                         return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
 
@@ -174,7 +175,7 @@ namespace MaoriQuiz
 
                     case 'H':
                         theQuiz = [
-                            ("Which of these bird is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
+                            ("Which of these birds is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
                             ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['C'], ['A', 'B', 'D'], 1),
                             ("(Worth double points) What is the Maori word for door?\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'C', 'D'], 2),
                             ("What is the Maori word for stage?\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['A', 'C', 'D'], 1),
