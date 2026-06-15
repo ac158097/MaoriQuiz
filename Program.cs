@@ -51,7 +51,7 @@ namespace MaoriQuiz
                     StringHelper.RGBIfy($"Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}/{GetTotalQuizPoints(GetQuizQuestions("E").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)", (0, 255, 0), reset: true),
                     StringHelper.RGBIfy($"Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}/{GetTotalQuizPoints(GetQuizQuestions("M").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)", (255, 255, 0), reset: true),
                     StringHelper.RGBIfy($"Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}/{GetTotalQuizPoints(GetQuizQuestions("H").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetTotalQuizPoints(GetQuizQuestions("H").Item2)) * 100)}% Correct)", (255, 0, 0), reset: true),
-                    (highscores.ContainsKey('S')) ? StringHelper.RGBIfy($"Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)\n", (199, 0, 255), reset: true) : ""
+                    (highscores.ContainsKey('S')) ? StringHelper.RGBIfy($"Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}/{GetTotalQuizPoints(GetQuizQuestions("S").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)\n", (199, 0, 255), reset: true) : ""
                 );
 
                 //pick a difficulty
@@ -175,7 +175,7 @@ namespace MaoriQuiz
                     case 'H':
                         theQuiz = [
                             ("Which of these bird is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
-                            ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['A'], ['B', 'C', 'D'], 1),
+                            ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['C'], ['A', 'B', 'D'], 1),
                             ("(Worth double points) What is the Maori word for door?\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'C', 'D'], 2),
                             ("What is the Maori word for stage?\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['A', 'C', 'D'], 1),
                             ("What does koura translate to?\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'D'], 1),
