@@ -168,7 +168,6 @@ namespace MaoriQuiz
                             ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D'], 1),
                             ("Which of these is a place in New Zealand and has the longest name?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
                             ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
-                            //not entirely related to maori but rather just nz ("What year were phones banned from schools in New Zealand?\nA. 2027\nB. 2025\nC. 2024\nD. 2017", ['C'], ['A', 'B', 'D'], 1),
                             ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
                         ];
                         return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
@@ -275,7 +274,8 @@ namespace MaoriQuiz
             else { Console.WriteLine("\e[0m"); return ""; }
         }
 
-        //checks if a name is within 52 chars long, is at least 2 words, doesnt have double spacebars, doesnt have numbers, and any full stops must come after words rather than in or before (e.g. "George Harris Sr." is valid, ".Jr  Mac" is invalid)
+        //checks if a name is within 52 chars long, is at least 2 words, doesnt have double spacebars, doesnt have numbers, and any full stops must come after words rather than in or before
+        //e.g. "George Harris Sr." is valid, ".Jr Mac" is invalid ("Jr. Mac" is valid), "Sheldon  Cooper" is invalid
         public static bool ValidName(string nameToTest)
         {
             Regex nameRegex = new Regex(@"([a-z]+\.? *)()+", RegexOptions.IgnoreCase);
