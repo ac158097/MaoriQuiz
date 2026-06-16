@@ -79,7 +79,7 @@ namespace MaoriQuiz
                     {
                         Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", chosenDifficulty.Item3));
                         isCorrect = AskQuestion(chosenDifficulty.Item2[i]);
-                        if (isCorrect) { Console.WriteLine(StringHelper.Fancify("Correct!\n", colorNum: 32)); score += chosenDifficulty.Item2[i].Points; }
+                        if (isCorrect) { Console.WriteLine(StringHelper.Fancify($"Correct! (+{chosenDifficulty.Item2[i].Points} points)\n", colorNum: 32)); score += chosenDifficulty.Item2[i].Points; }
                         else Console.Write(StringHelper.Fancify("Incorrect!\n", colorNum: 31));
                         if (!isCorrect || chosenDifficulty.Item2[i].CorrectAnswers.Count > 1)
                         {
@@ -168,7 +168,7 @@ namespace MaoriQuiz
                             ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
                             ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C'], 1),
-                            ("What does kakariki translate to?\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['B', 'C', 'D'], 1),
+                            ("What does kakariki translate to? (Double Point Question!)\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['B', 'C', 'D'], 2),
                         ];
                         return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (0, 255, 0)); // rnd.Next returns a random int32, so .OrderBy sorts the list by which items have the highest numbers assigned to them
 
@@ -177,7 +177,7 @@ namespace MaoriQuiz
                             ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'C', 'D'], 1),
                             ("Which of these is a place in New Zealand and has the longest name?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['B', 'C', 'D'], 1),
                             ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
-                            ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
+                            ("True or False: The Treaty Of Waitangi was signed in 1845? (Double Point Question!)\nT. True\nF. False", ['F'], ['T'], 2),
                         ];
                         return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 255, 0)); // ditto
 
@@ -185,7 +185,7 @@ namespace MaoriQuiz
                         theQuiz = [
                             ("Which of these birds is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'C', 'D'], 1),
                             ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['C'], ['A', 'B', 'D'], 1),
-                            ("(Worth double points) What is the Maori word for door?\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'C', 'D'], 2),
+                            ("What is the Maori word for door? (Double Point Question!)\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'C', 'D'], 2),
                             ("What is the Maori word for stage?\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['B', 'C', 'D'], 1),
                             ("What does koura translate to?\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'D'], 1),
                             ("What does pepa translate to?\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C'], 1),
