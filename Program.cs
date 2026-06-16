@@ -164,7 +164,7 @@ namespace MaoriQuiz
                     // if you are adding additional questions to ANY difficulty, i would not reccommend having any chars in both correct and incorrect answersX
                     case 'E':
                         theQuiz = [
-                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1), 
+                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
                             ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
                             ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C'], 1),
@@ -239,14 +239,11 @@ namespace MaoriQuiz
         }
 
         // checks if user has every possible point for every possible difficulty
-        static bool IsQuizMaster(Scoredict scores) {
-            if (GetHighscoreOrZero(scores, 'E') == GetTotalQuizPoints(GetQuizQuestions("E").Item2) &&
+        static bool IsQuizMaster(Scoredict scores) =>
+                GetHighscoreOrZero(scores, 'E') == GetTotalQuizPoints(GetQuizQuestions("E").Item2) &&
                 GetHighscoreOrZero(scores, 'M') == GetTotalQuizPoints(GetQuizQuestions("M").Item2) &&
                 GetHighscoreOrZero(scores, 'H') == GetTotalQuizPoints(GetQuizQuestions("H").Item2) &&
-                GetHighscoreOrZero(scores, 'S') == GetTotalQuizPoints(GetQuizQuestions("S").Item2))
-            { return true; }
-            return false;
-        }
+                GetHighscoreOrZero(scores, 'S') == GetTotalQuizPoints(GetQuizQuestions("S").Item2);
     }
 
     //class for functions to help with strings
