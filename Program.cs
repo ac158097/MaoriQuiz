@@ -44,14 +44,14 @@ namespace MaoriQuiz
                 score = 0;
                 //print difficulties, highscores, and what percent of questions were right from highscore, with rgb colouring
                 Console.WriteLine("""
-                    Welcome, {0}!
+                    {0}
                     Choose a difficulty:
                     {2}
                     {3}
                     {4}
                     {5}{1}
                     """,
-                    name,
+                    (IsQuizMaster(highscores)) ? $"Congrats, {name}! You have aced every quiz difficulty!" : $"Welcome, {name}!", // check if user is master of quizes (has every question right on every difficulty), congratulates them if they are, welcomes them if not
                     StringHelper.RGBIfy("Quit [Q]", (123, 0, 217), reset: true),
                     StringHelper.RGBIfy($"Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}/{GetTotalQuizPoints(GetQuizQuestions("E").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)", (0, 255, 0), reset: true),
                     StringHelper.RGBIfy($"Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}/{GetTotalQuizPoints(GetQuizQuestions("M").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)", (255, 255, 0), reset: true),
@@ -150,8 +150,9 @@ namespace MaoriQuiz
         //check dictionary containing high scores per difficulty, if it doesnt contain the difficulty as a key, say that the high scores is 0
         static float GetHighscoreOrZero(Scoredict scores, char difficulty) => scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
 
-        //returns quiz questions
-        static (char, List<Question>) GetQuizQuestions(string diffi)
+
+        //returns quiz questions (will make colour correlated to quiz later)
+        static (char, List<Question>) GetQuizQuestions(string diffi) // diffi is short for difficulty, which in this case is a string supplied by the user, which is check if it is one letter, if it is, then it checks if the letter correlates to a difficulty
         {
             var rnd = new Random(); // so that rnd.Next works later when shuffling questions before return
             List<Question> theQuiz = [];
@@ -160,9 +161,10 @@ namespace MaoriQuiz
             {
                 switch (char.ToUpper(diffi[0]))
                 {
+                    // if you are adding additional questions to ANY difficulty, i would not reccommend having any chars in both correct and incorrect answersX
                     case 'E':
                         theQuiz = [
-                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1),
+                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['B', 'C', 'D'], 1), 
                             ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
                             ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C'], 1),
@@ -234,6 +236,16 @@ namespace MaoriQuiz
                 total += questio.Points;
             }
             return total;
+        }
+
+        // checks if user has every possible point for every possible difficulty
+        static bool IsQuizMaster(Scoredict scores) {
+            if (GetHighscoreOrZero(scores, 'E') == GetTotalQuizPoints(GetQuizQuestions("E").Item2) &&
+                GetHighscoreOrZero(scores, 'M') == GetTotalQuizPoints(GetQuizQuestions("M").Item2) &&
+                GetHighscoreOrZero(scores, 'H') == GetTotalQuizPoints(GetQuizQuestions("H").Item2) &&
+                GetHighscoreOrZero(scores, 'S') == GetTotalQuizPoints(GetQuizQuestions("S").Item2))
+            { return true; }
+            return false;
         }
     }
 
