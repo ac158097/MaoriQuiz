@@ -2,8 +2,11 @@
 
 using System.Text.RegularExpressions;
 
+// alias for a very long type
 using Question = (string QuestionString, System.Collections.Generic.List<char> CorrectAnswers, System.Collections.Generic.List<char> IncorrectAnswers, float Points);
-// questions, answer chars, incorrect chars, points awarded for correct
+//                question,              answer chars,                                         incorrect chars,                                        points awarded for correct answer
+
+// alias for rgb colours
 using RGBColour = (int R, int G, int B);
 using Scoredict = System.Collections.Generic.Dictionary<char, float>;
 
@@ -11,7 +14,7 @@ namespace MaoriQuiz
 {
     internal class Program
     {
-        static void Main(/*string[] args*/)
+        static void Main(/*string[] args*/) // dont really need any args (at least for now)
         {
             //initialize vars
             string name;
@@ -21,7 +24,9 @@ namespace MaoriQuiz
             string replaychoice;
             Scoredict highscores = [];
             (char, List<Question>) chosenDifficulty;
+            // the char in this type is to tell high scores what key to put the score under
             ConsoleHelper.ClearFullConsole();
+
             //ask for name
             do
             {
@@ -37,7 +42,7 @@ namespace MaoriQuiz
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
-                //print difficulties, highscores, and what percent of questions were right from highscore
+                //print difficulties, highscores, and what percent of questions were right from highscore, with rgb colouring
                 Console.WriteLine("""
                     Welcome, {0}!
                     Choose a difficulty:
@@ -58,7 +63,7 @@ namespace MaoriQuiz
                 do
                 {
                     Console.Write($"{StringHelper.RGBIfy("Choice", (91, 217, 210))}: ");
-                    chosenDifficulty = GetQuizQuestions(Console.ReadLine());
+                    chosenDifficulty = GetQuizQuestions(Console.ReadLine()); // parsing chosen difficulty to GetQuizQuestions as a string
                     if (chosenDifficulty.Item2.Count == 0)
                     {
                         Console.WriteLine("Invalid choice.\n");
@@ -142,7 +147,7 @@ namespace MaoriQuiz
             } while (replay);
         }
 
-        //return a high score, if there is none, return zero
+        //check dictionary containing high scores per difficulty, if it doesnt contain the difficulty as a key, say that the high scores is 0
         static float GetHighscoreOrZero(Scoredict scores, char difficulty) => scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
 
         //returns quiz questions
@@ -161,8 +166,9 @@ namespace MaoriQuiz
                             ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['B', 'C', 'D'], 1),
                             ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C'], 1),
+                            ("What does kakariki translate to?\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['B', 'C', 'D'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]); // rnd.Next returns a random int32, so .OrderBy sorts the list by which items have the highest numbers assigned to them
 
                     case 'M':
                         theQuiz = [
@@ -171,7 +177,7 @@ namespace MaoriQuiz
                             ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
                             ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]); // ditto
 
                     case 'H':
                         theQuiz = [
@@ -244,7 +250,7 @@ namespace MaoriQuiz
         35: purple
         36: cyan
         37: white
-        method for ansi formatting but somewhat simpler
+        method that makes ansi formatting easier for other functions
         */
 
         public static string Fancify(string text, bool isBold = false, bool isUnderline = false, int colorNum = 37, bool reset = true)
@@ -303,7 +309,7 @@ namespace MaoriQuiz
             });
     }
 
-    //class which is kind of unnecessary
+    //class which is kind of unnecessary, but might be helpful if i make another function to help with consoles
     public static class ConsoleHelper
     {
         //clears console (do i have to explain)
