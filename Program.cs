@@ -23,7 +23,7 @@ namespace MaoriQuiz
             bool replay = false;
             string replaychoice;
             Scoredict highscores = [];
-            (char, List<Question>) chosenDifficulty;
+            (char, List<Question>, RGBColour) chosenDifficulty;
             // the char in this type is to tell high scores what key to put the score under
             ConsoleHelper.ClearFullConsole();
 
@@ -52,11 +52,11 @@ namespace MaoriQuiz
                     {5}{1}
                     """,
                     (IsQuizMaster(highscores)) ? $"Congrats, {name}! You have aced every quiz difficulty!" : $"Welcome, {name}!", // check if user is master of quizes (has every question right on every difficulty), congratulates them if they are, welcomes them if not
-                    StringHelper.RGBIfy("Quit [Q]", (123, 0, 217), reset: true),
-                    StringHelper.RGBIfy($"Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}/{GetTotalQuizPoints(GetQuizQuestions("E").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)", (0, 255, 0), reset: true),
-                    StringHelper.RGBIfy($"Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}/{GetTotalQuizPoints(GetQuizQuestions("M").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)", (255, 255, 0), reset: true),
-                    StringHelper.RGBIfy($"Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}/{GetTotalQuizPoints(GetQuizQuestions("H").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetTotalQuizPoints(GetQuizQuestions("H").Item2)) * 100)}% Correct)", (255, 0, 0), reset: true),
-                    (highscores.ContainsKey('S')) ? StringHelper.RGBIfy($"Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}/{GetTotalQuizPoints(GetQuizQuestions("S").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)\n", (199, 0, 255), reset: true) : ""
+                    StringHelper.RGBIfy("Quit [Q]", GetQuizQuestions("Q").Item3, reset: true),
+                    StringHelper.RGBIfy($"Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}/{GetTotalQuizPoints(GetQuizQuestions("E").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)", GetQuizQuestions("E").Item3, reset: true),
+                    StringHelper.RGBIfy($"Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}/{GetTotalQuizPoints(GetQuizQuestions("M").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)", GetQuizQuestions("M").Item3, reset: true),
+                    StringHelper.RGBIfy($"Hard [H]\t(High Score: {GetHighscoreOrZero(highscores, 'H')}/{GetTotalQuizPoints(GetQuizQuestions("H").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'H') / GetTotalQuizPoints(GetQuizQuestions("H").Item2)) * 100)}% Correct)", GetQuizQuestions("H").Item3, reset: true),
+                    (highscores.ContainsKey('S')) ? StringHelper.RGBIfy($"Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}/{GetTotalQuizPoints(GetQuizQuestions("S").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)\n", GetQuizQuestions("S").Item3, reset: true) : ""
                 );
 
                 //pick a difficulty
@@ -77,7 +77,7 @@ namespace MaoriQuiz
                 {
                     if (chosenDifficulty.Item1 != 'Q')
                     {
-                        Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", (217, 72, 0)));
+                        Console.Write(StringHelper.RGBIfy($"Question {i + 1}: ", chosenDifficulty.Item3));
                         isCorrect = AskQuestion(chosenDifficulty.Item2[i]);
                         if (isCorrect) { Console.WriteLine(StringHelper.Fancify("Correct!\n", colorNum: 32)); score += chosenDifficulty.Item2[i].Points; }
                         else Console.Write(StringHelper.Fancify("Incorrect!\n", colorNum: 31));
@@ -152,7 +152,7 @@ namespace MaoriQuiz
 
 
         //returns quiz questions (will make colour correlated to quiz later)
-        static (char, List<Question>) GetQuizQuestions(string diffi) // diffi is short for difficulty, which in this case is a string supplied by the user, which is check if it is one letter, if it is, then it checks if the letter correlates to a difficulty
+        static (char, List<Question>, RGBColour) GetQuizQuestions(string diffi) // diffi is short for difficulty, which in this case is a string supplied by the user, which is check if it is one letter, if it is, then it checks if the letter correlates to a difficulty
         {
             var rnd = new Random(); // so that rnd.Next works later when shuffling questions before return
             List<Question> theQuiz = [];
@@ -170,7 +170,7 @@ namespace MaoriQuiz
                             ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C'], 1),
                             ("What does kakariki translate to?\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['B', 'C', 'D'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]); // rnd.Next returns a random int32, so .OrderBy sorts the list by which items have the highest numbers assigned to them
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (0, 255, 0)); // rnd.Next returns a random int32, so .OrderBy sorts the list by which items have the highest numbers assigned to them
 
                     case 'M':
                         theQuiz = [
@@ -179,7 +179,7 @@ namespace MaoriQuiz
                             ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C'], 1),
                             ("True or False: The Treaty Of Waitangi was signed in 1845?\nT. True\nF. False", ['F'], ['T'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]); // ditto
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 255, 0)); // ditto
 
                     case 'H':
                         theQuiz = [
@@ -190,24 +190,24 @@ namespace MaoriQuiz
                             ("What does koura translate to?\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'D'], 1),
                             ("What does pepa translate to?\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 0, 0));
 
                     case 'S':
                         //these are the questions for the secret difficulty
                         theQuiz = [
                             ("Which of these people helped translate the Treaty of Waitangi?\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'D'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())]);
+                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (199, 0, 255));
 
                     case 'Q':
                         return (char.ToUpper(diffi[0]), [
                         ("Really Quit? (Y/N)", ['Y'], ['N'], 1)
-                        ]);
-                    default: return ('♣', []);
+                        ], (123, 0, 217));
+                    default: return ('♣', [], (0, 0, 0));
                 }
                 ;
             }
-            return ('♣', []);
+            return ('♣', [], (0, 0, 0));
         }
 
         //gets the users answer for a question and checks if its correct
@@ -240,10 +240,10 @@ namespace MaoriQuiz
 
         // checks if user has every possible point for every possible difficulty
         static bool IsQuizMaster(Scoredict scores) =>
-                GetHighscoreOrZero(scores, 'E') == GetTotalQuizPoints(GetQuizQuestions("E").Item2) &&
-                GetHighscoreOrZero(scores, 'M') == GetTotalQuizPoints(GetQuizQuestions("M").Item2) &&
-                GetHighscoreOrZero(scores, 'H') == GetTotalQuizPoints(GetQuizQuestions("H").Item2) &&
-                GetHighscoreOrZero(scores, 'S') == GetTotalQuizPoints(GetQuizQuestions("S").Item2);
+            GetHighscoreOrZero(scores, 'E') == GetTotalQuizPoints(GetQuizQuestions("E").Item2) &&
+            GetHighscoreOrZero(scores, 'M') == GetTotalQuizPoints(GetQuizQuestions("M").Item2) &&
+            GetHighscoreOrZero(scores, 'H') == GetTotalQuizPoints(GetQuizQuestions("H").Item2) &&
+            GetHighscoreOrZero(scores, 'S') == GetTotalQuizPoints(GetQuizQuestions("S").Item2);
     }
 
     //class for functions to help with strings
