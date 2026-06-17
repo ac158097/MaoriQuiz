@@ -296,8 +296,8 @@ namespace MaoriQuiz
         //checks if a name is a valid first name
         public static bool ValidFirstName(string nameToTest)
         {
-            Regex nameRegex = new Regex(@"[a-z]+", RegexOptions.IgnoreCase);
-            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && !string.IsNullOrEmpty(nameToTest) && nameToTest.Length <= 21 && !nameToTest.Contains(' '))
+            Regex nameRegex = new Regex(@"[a-z]{1,21}", RegexOptions.IgnoreCase);
+            if (nameRegex.Matches(nameToTest).ToList().Count <= 2 && !string.IsNullOrEmpty(nameToTest) && !nameToTest.Contains(' '))
             {
                 return true;
             }
