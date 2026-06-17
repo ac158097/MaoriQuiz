@@ -1,6 +1,5 @@
 ﻿#nullable disable
 
-using System.Diagnostics.Tracing;
 using System.Text.RegularExpressions;
 
 // alias for a very long type
@@ -120,26 +119,19 @@ namespace MaoriQuiz
                     {
                         Console.Write($"Would you like to replay [Y/N]?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
                         replaychoice = Console.ReadLine().ToUpper();
-                        if (replaychoice.Length == 1)
+                        if (replaychoice == "Y")
                         {
-                            if (replaychoice[0] == 'Y')
-                            {
-                                replay = true;
-                            }
-                            else if (replaychoice[0] == 'N')
-                            {
-                                replay = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid Option.\n");
-                            }
+                            replay = true;
+                        }
+                        else if (replaychoice == "N")
+                        {
+                            replay = false;
                         }
                         else
                         {
                             Console.WriteLine("Invalid Option.\n");
                         }
-                    } while (!(new List<string> { "Y", "N" }.Contains(replaychoice)));
+                    } while (!(new string[] { "Y", "N" }.Contains(replaychoice)));
                 }
                 else
                 {
@@ -158,58 +150,53 @@ namespace MaoriQuiz
             var rnd = new Random(); // so that rnd.Next works later when shuffling questions before return
             List<Question> theQuiz = [];
 
-            if (diffi.Length == 1)
+            switch (diffi.ToUpper())
             {
-                switch (char.ToUpper(diffi[0]))
-                {
-                    // make sure that every possible option is either in the correct answer char list, incorrect answer char list, or both (will count as correct if in both)
-                    case 'E':
-                        theQuiz = [
-                            ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['A', 'B', 'C', 'D'], 1),
+                // make sure that every possible option is either in the correct answer char list, incorrect answer char list, or both (will count as a correct answer if in both)
+                case "E":
+                    theQuiz = [
+                        ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['A', 'B', 'C', 'D'], 1),
                             ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['A', 'B', 'C', 'D'], 1),
                             ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C', 'D'], 1),
                             ("What does kakariki translate to? (Double Point Question!)\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['A', 'B', 'C', 'D'], 2),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (0, 255, 0)); // rnd.Next returns a random int32, so .OrderBy sorts the list by which items have the highest numbers assigned to them
+                    return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (0, 255, 0)); // rnd.Next returns a random int32, so .OrderBy sorts the list by which items have the highest numbers assigned to them
 
-                    case 'M':
-                        theQuiz = [
-                            ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'B', 'C', 'D'], 1),
+                case "M":
+                    theQuiz = [
+                        ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'B', 'C', 'D'], 1),
                             ("Which of these is a place in New Zealand and has the longest name?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['A', 'B', 'C', 'D'], 1),
                             ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C', 'D'], 1),
                             ("True or False: The Treaty Of Waitangi was signed in 1845? (Double Point Question!)\nT. True\nF. False", ['F'], ['T', 'F'], 2),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 255, 0)); // ditto
+                    return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 255, 0)); // ditto
 
-                    case 'H':
-                        theQuiz = [
-                            ("Which of these birds is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'B', 'C', 'D'], 1),
+                case "H":
+                    theQuiz = [
+                        ("Which of these birds is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'B', 'C', 'D'], 1),
                             ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("What is the Maori word for door? (Double Point Question!)\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'B', 'C', 'D'], 2),
                             ("What is the Maori word for stage?\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['A', 'B', 'C', 'D'], 1),
                             ("What does koura translate to?\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("What does pepa translate to?\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C', 'D'], 1),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 0, 0));
+                    return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 0, 0));
 
-                    case 'S':
-                        //these are the questions for the secret difficulty
-                        theQuiz = [
-                            ("Which of these people helped translate the Treaty of Waitangi? (Triple Point Question!)\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'C', 'D'], 3),
+                case "S":
+                    //these are the questions for the secret difficulty
+                    theQuiz = [
+                        ("Which of these people helped translate the Treaty of Waitangi? (Triple Point Question!)\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'C', 'D'], 3),
                             ("What year was Aotearoa discovered? (Worth 10 Points!)\nA. ~1750\nB. ~1580\nC. ~1225\nD. ~1280", ['D'], ['A', 'B', 'C', 'D'], 10),
                         ];
-                        return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (199, 0, 255));
+                    return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (199, 0, 255));
 
-                    case 'Q':
-                        return (char.ToUpper(diffi[0]), [
-                        ("Really Quit? (Y/N)", ['Y'], ['N'], 1)
-                        ], (123, 0, 217));
-                    default: return ('♣', [], (0, 0, 0));
-                }
-                ;
+                case "Q":
+                    return (char.ToUpper(diffi[0]), [
+                    ("Really Quit? (Y/N)", ['Y'], ['N'], 1)
+                    ], (123, 0, 217));
+                default: return ('♣', [], (0, 0, 0));
             }
-            return ('♣', [], (0, 0, 0));
         }
 
         //gets the users answer for a question and checks if its correct
@@ -279,7 +266,8 @@ namespace MaoriQuiz
             return $"{formatting}{text}{resetstring}";
         }
 
-        public static void SlowTyper(string inputString, int interval) {
+        public static void SlowTyper(string inputString, int interval)
+        {
             foreach (char letter in inputString)
             {
                 Console.Write(letter);
