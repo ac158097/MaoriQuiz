@@ -30,13 +30,13 @@ namespace MaoriQuiz
             //ask for name
             do
             {
-                Console.Write($"Please enter your {StringHelper.Fancify("full", isBold: true, isUnderline: true)} name: ");
+                Console.Write($"Please enter your first name: ");
                 name = StringHelper.Capitalize(Console.ReadLine().Trim());
-                if (!StringHelper.ValidName(name))
+                if (!StringHelper.ValidFirstName(name))
                 {
-                    Console.WriteLine("Not a valid full name.\n");
+                    Console.WriteLine("Not a valid first name.\n");
                 }
-            } while (!StringHelper.ValidName(name));
+            } while (!StringHelper.ValidFirstName(name));
 
             do
             {
@@ -293,15 +293,13 @@ namespace MaoriQuiz
             else { Console.Write("\e[0m"); return ""; }
         }
 
-        //checks if a name is within 52 chars long, is at least 2 words, doesnt have double spacebars, doesnt have numbers, and any full stops must come after words rather than in or before
-        //e.g. "George Harris Sr." is valid, ".Jr Mac" is invalid ("Jr. Mac" is valid), "Sheldon  Cooper" is invalid
-        public static bool ValidName(string nameToTest)
+        //checks if a name is a valid first name
+        public static bool ValidFirstName(string nameToTest)
         {
-            Regex nameRegex = new Regex(@"([a-z]+\.? *)()+", RegexOptions.IgnoreCase);
-            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && nameToTest != "" && nameToTest.Length <= 52 && nameToTest.Contains(' '))
+            Regex nameRegex = new Regex(@"[a-z]+", RegexOptions.IgnoreCase);
+            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && !string.IsNullOrEmpty(nameToTest) && nameToTest.Length <= 21 && !nameToTest.Contains(' '))
             {
-                int count = nameToTest.Count(c => c == ' ');
-                if (count + 1 == nameRegex.Matches(nameToTest).Count) { return true; }
+                return true;
             }
             return false;
         }
