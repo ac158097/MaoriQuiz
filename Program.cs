@@ -1,5 +1,6 @@
 ﻿#nullable disable
 
+using System.Diagnostics.Tracing;
 using System.Text.RegularExpressions;
 
 // alias for a very long type
@@ -278,6 +279,14 @@ namespace MaoriQuiz
             return $"{formatting}{text}{resetstring}";
         }
 
+        public static void SlowTyper(string inputString, int interval) {
+            foreach (char letter in inputString)
+            {
+                Console.Write(letter);
+                Thread.Sleep(interval);
+            }
+        }
+
         //colours text by taking rgb input
         public static string RGBIfy(string text, RGBColour col, bool reset = true)
         {
@@ -293,7 +302,7 @@ namespace MaoriQuiz
         public static string ResetFormatting(bool returnInstead)
         {
             if (returnInstead) return "\e[0m";
-            else { Console.WriteLine("\e[0m"); return ""; }
+            else { Console.Write("\e[0m"); return ""; }
         }
 
         //checks if a name is within 52 chars long, is at least 2 words, doesnt have double spacebars, doesnt have numbers, and any full stops must come after words rather than in or before
