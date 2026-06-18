@@ -297,7 +297,7 @@ namespace MaoriQuiz
         }
 
         //checks if name is one word, with no numbers, and is within the length of 1 to 21 characters
-        public static bool ValidFirstName(string nameToTest) => Regex.Matches(nameToTest, @"[a-z]{1,21}", RegexOptions.IgnoreCase).Count == 1;
+        public static bool ValidFirstName(string nameToTest) => Regex.Matches(nameToTest, @"[a-z]{1,21}", RegexOptions.IgnoreCase).Count == 1 && nameToTest.Length == Regex.Matches(nameToTest, @"[a-z]{1,21}", RegexOptions.IgnoreCase)[0].Length;
 
         //capitalize first letters of words in string, otherwise decapitalizes them (this is to correct wrong capitalization, "mICheal JoRdAN" becomes "Micheal Jordan")
         public static string Capitalize(string stringToCapitalize) => Regex.Replace(Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
