@@ -300,7 +300,7 @@ namespace MaoriQuiz
         public static bool ValidFirstName(string nameToTest)
         {
             Regex nameRegex = new Regex(@"[a-z]{1,21}", RegexOptions.IgnoreCase);
-            if (nameRegex.Matches(nameToTest)[0].Length == nameToTest.Length && !string.IsNullOrEmpty(nameToTest) && !nameToTest.Contains(' '))
+            if (!string.IsNullOrEmpty(nameToTest) && nameRegex.Matches(nameToTest)[0].Length == nameToTest.Length && !nameToTest.Contains(' '))
             {
                 return true;
             }
