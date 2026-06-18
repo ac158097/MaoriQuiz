@@ -66,7 +66,7 @@ namespace MaoriQuiz
                 do
                 {
                     Console.Write($"{StringHelper.RGBIfy("Choice", (91, 217, 210))}: ");
-                    chosenDifficulty = GetQuizQuestions(Console.ReadLine()); // parsing chosen difficulty to GetQuizQuestions as a string
+                    chosenDifficulty = GetQuizQuestions(Console.ReadLine().Trim()); // parsing chosen difficulty to GetQuizQuestions as a string
                     if (chosenDifficulty.Item2.Count == 0)
                     {
                         Console.WriteLine("Invalid choice.\n");
@@ -121,7 +121,7 @@ namespace MaoriQuiz
                     do
                     {
                         Console.Write($"Would you like to replay [Y/N]?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
-                        replaychoice = Console.ReadLine().ToUpper();
+                        replaychoice = Console.ReadLine().Trim().ToUpper();
                         if (replaychoice == "Y")
                         {
                             replay = true;
@@ -210,7 +210,7 @@ namespace MaoriQuiz
             do
             {
                 Console.Write($"{StringHelper.RGBIfy("Answer", (91, 217, 210))}: ");
-                userInput = Console.ReadLine();
+                userInput = Console.ReadLine().Trim();
                 if (userInput.Length != 1 || !questions.IncorrectAnswers.Contains(char.ToUpper(userInput[0])) && !questions.CorrectAnswers.Contains(char.ToUpper(userInput[0])))
                 {
                     Console.WriteLine("Invalid Answer.\n");
