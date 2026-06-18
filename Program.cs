@@ -54,7 +54,7 @@ namespace MaoriQuiz
                     {4}
                     {5}{1}
                     """,
-                    (IsQuizMaster(highscores)) ? $"Congrats, {name}! You have aced every quiz difficulty!" : $"Welcome, {name}!", // check if user is master of quizes (has every question right on every difficulty), congratulates them if they are, welcomes them if not
+                    (IsQuizMaster(highscores)) ? $"Congrats, {name}! You have aced every quiz difficulty!" : $"Welcome to the Maori/NZ Quiz, {name}!", // check if user is master of quizes (has every question right on every difficulty), congratulates them if they are, welcomes them if not
                     StringHelper.RGBIfy("Quit [Q]", GetQuizQuestions("Q").Item3, reset: true),
                     StringHelper.RGBIfy($"Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}/{GetTotalQuizPoints(GetQuizQuestions("E").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)", GetQuizQuestions("E").Item3, reset: true),
                     StringHelper.RGBIfy($"Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}/{GetTotalQuizPoints(GetQuizQuestions("M").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)", GetQuizQuestions("M").Item3, reset: true),
