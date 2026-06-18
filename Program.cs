@@ -6,7 +6,8 @@ using System.Text.RegularExpressions;
 using Question = (string QuestionString, System.Collections.Generic.List<char> CorrectAnswers, System.Collections.Generic.List<char> IncorrectAnswers, float Points);
 //                question,              correct answer chars,                                 incorrect options chars/all option chars,               points awarded for correct answer
 
-// alias for rgb colours
+// alias for rgb colours, the r, g and b obviously stand for red, green and blue
+// this is used for colouring text with StringHelper.RGBIfy()
 using RGBColour = (int R, int G, int B);
 using Scoredict = System.Collections.Generic.Dictionary<char, float>;
 
@@ -25,7 +26,8 @@ namespace MaoriQuiz
             Scoredict highscores = [];
             (char, List<Question>, RGBColour) chosenDifficulty;
             // the char in this type is to tell high scores what key to put the score under
-            // RGBColour is a tuple containing 3 values corresponding to the rgb value of the difficulty name
+            // RGBColour colour here is so that the difficulty has a colour correlated to it, which is used when outputting the diffculty name to the terminal
+
             ConsoleHelper.ClearFullConsole();
 
             //ask for name
@@ -294,11 +296,11 @@ namespace MaoriQuiz
             else { Console.Write("\e[0m"); return ""; }
         }
 
-        //checks if a name is a valid first name
+        //checks if name is one word, with no numbers, and is within the length of 1 to 21 characters
         public static bool ValidFirstName(string nameToTest)
         {
             Regex nameRegex = new Regex(@"[a-z]{1,21}", RegexOptions.IgnoreCase);
-            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && !string.IsNullOrEmpty(nameToTest) && !nameToTest.Contains(' '))
+            if (nameRegex.Matches(nameToTest)[0].Length == nameToTest.Length && !string.IsNullOrEmpty(nameToTest) && !nameToTest.Contains(' '))
             {
                 return true;
             }
