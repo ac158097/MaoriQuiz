@@ -25,6 +25,7 @@ namespace MaoriQuiz
             Scoredict highscores = [];
             (char, List<Question>, RGBColour) chosenDifficulty;
             // the char in this type is to tell high scores what key to put the score under
+            // RGBColour is a tuple containing 3 values corresponding to the rgb value of the difficulty name
             ConsoleHelper.ClearFullConsole();
 
             //ask for name
@@ -297,7 +298,7 @@ namespace MaoriQuiz
         public static bool ValidFirstName(string nameToTest)
         {
             Regex nameRegex = new Regex(@"[a-z]{1,21}", RegexOptions.IgnoreCase);
-            if (nameRegex.Matches(nameToTest).ToList().Count <= 2 && !string.IsNullOrEmpty(nameToTest) && !nameToTest.Contains(' '))
+            if (string.Join("", nameRegex.Matches(nameToTest)).Length == nameToTest.Length && !string.IsNullOrEmpty(nameToTest) && !nameToTest.Contains(' '))
             {
                 return true;
             }
