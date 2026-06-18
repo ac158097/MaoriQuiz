@@ -1,4 +1,4 @@
-﻿#nullable disable
+﻿#nullable disable //helps with not getting warnings for Console.ReadLine(), and im not using nullable types anyways (i think? nullable types are like "Type?" instead of "Type" )
 
 using System.Text.RegularExpressions;
 
@@ -297,15 +297,7 @@ namespace MaoriQuiz
         }
 
         //checks if name is one word, with no numbers, and is within the length of 1 to 21 characters
-        public static bool ValidFirstName(string nameToTest)
-        {
-            Regex nameRegex = new Regex(@"[a-z]{1,21}", RegexOptions.IgnoreCase);
-            if (nameRegex.Matches(nameToTest).Count == 1)
-            {
-                return true;
-            }
-            return false;
-        }
+        public static bool ValidFirstName(string nameToTest) => Regex.Matches(nameToTest, @"[a-z]{1,21}", RegexOptions.IgnoreCase).Count == 1;
 
         //capitalize first letters of words in string, otherwise decapitalizes them (this is to correct wrong capitalization, "mICheal JoRdAN" becomes "Micheal Jordan")
         public static string Capitalize(string stringToCapitalize) => Regex.Replace(Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
