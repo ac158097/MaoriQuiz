@@ -196,7 +196,7 @@ namespace MaoriQuiz
 
                 case "Q":
                     return (char.ToUpper(diffi[0]), [
-                    ("Really Quit? (Y/N)", ['Y'], ['N'], 1)
+                    ("Really Quit? [Y/N]", ['Y'], ['N'], 1)
                     ], (123, 0, 217));
                 default: return ('♣', [], (0, 0, 0));
             }
