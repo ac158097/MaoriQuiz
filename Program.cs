@@ -169,7 +169,7 @@ namespace MaoriQuiz
                 case "M":
                     theQuiz = [
                         ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'B', 'C', 'D'], 1),
-                            ("Which of these is a place in New Zealand and has the longest name?\nA. Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu\nB. Chargoggagoggmanchauggauggagoggchaubunagungamaugg\nC. Captain Cook Hawkes Bay Port\nD. Tane Mahuta Walk", ['A'], ['A', 'B', 'C', 'D'], 1),
+                            ("What is the steepest street in New Zealand?\nA. Harry Street\nB. Third Steet\nC. Baldwin Street\nD. Tuff Street", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C', 'D'], 1),
                             ("True or False: The Treaty Of Waitangi was signed in 1845? (Double Point Question!)\nT. True\nF. False", ['F'], ['T', 'F'], 2),
                         ];
