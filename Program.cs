@@ -225,7 +225,10 @@ namespace MaoriQuiz
             float total = 0;
             foreach (Question questio in questions)
             {
-                total += questio.Points;
+                if (questio.Points > 0)
+                {
+                    total += questio.Points;
+                }
             }
             return total;
         }
