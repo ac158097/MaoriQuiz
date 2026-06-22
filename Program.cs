@@ -1,4 +1,4 @@
-﻿#nullable disable //helps with not getting warnings for Console.ReadLine(), and im not using nullable types anyways (i think? nullable types are like "Type?" instead of "Type" )
+﻿#nullable disable // helps with not getting warnings for Console.ReadLine(), and im not using nullable types anyways (i think? nullable types are like "Type?" instead of "Type" )
 
 using System.Text.RegularExpressions;
 
@@ -17,7 +17,7 @@ namespace MaoriQuiz
     {
         static void Main(/*string[] args*/) // dont really need any args (at least for now)
         {
-            //initialize vars
+            // initialize vars
             string name;
             bool isCorrect;
             float score;
@@ -30,7 +30,7 @@ namespace MaoriQuiz
 
             ConsoleHelper.ClearFullConsole();
 
-            //ask for name
+            // ask for name
             do
             {
                 Console.Write($"Please enter your first name: ");
@@ -45,7 +45,7 @@ namespace MaoriQuiz
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
-                //print difficulties, highscores, and what percent of questions were right from highscore, with rgb colouring
+                // print difficulties, highscores, and what percent of questions were right from highscore, with rgb colouring
                 Console.WriteLine("""
                     {0}
                     Choose a difficulty:
@@ -62,7 +62,7 @@ namespace MaoriQuiz
                     (highscores.ContainsKey('S')) ? StringHelper.RGBIfy($"Secret [S]\t(High Score: {GetHighscoreOrZero(highscores, 'S')}/{GetTotalQuizPoints(GetQuizQuestions("S").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'S') / GetTotalQuizPoints(GetQuizQuestions("S").Item2)) * 100)}% Correct)\n", GetQuizQuestions("S").Item3, reset: true) : ""
                 );
 
-                //pick a difficulty
+                // pick a difficulty
                 do
                 {
                     Console.Write($"{StringHelper.RGBIfy("Choice", (91, 217, 210))}: ");
@@ -102,7 +102,7 @@ namespace MaoriQuiz
                 }
 
 
-                //quiz score/highscore related things
+                // quiz score/highscore related things
                 if (chosenDifficulty.Item1 != 'Q')
                 {
                     if (!highscores.ContainsKey(chosenDifficulty.Item1))
@@ -117,7 +117,7 @@ namespace MaoriQuiz
                     Console.WriteLine($"Score: {score}\tPercent: {Math.Round((score / GetTotalQuizPoints(chosenDifficulty.Item2)) * 100)}%");
 
 
-                    //ask if replaying or not
+                    // ask if replaying or not
                     do
                     {
                         Console.Write($"Would you like to replay [Y/N]?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
@@ -143,11 +143,11 @@ namespace MaoriQuiz
             } while (replay);
         }
 
-        //check dictionary containing high scores per difficulty, if it doesnt contain the difficulty as a key, say that the high scores is 0
+        // check dictionary containing high scores per difficulty, if it doesnt contain the difficulty as a key, say that the high scores is 0
         static float GetHighscoreOrZero(Scoredict scores, char difficulty) => scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
 
 
-        //returns quiz questions (will make colour correlated to quiz later)
+        // returns quiz questions (will make colour correlated to quiz later)
         static (char, List<Question>, RGBColour) GetQuizQuestions(string diffi) // diffi is short for difficulty, which in this case is a string supplied by the user, which is check if it is one letter, if it is, then it checks if the letter correlates to a difficulty
         {
             var rnd = new Random(); // so that rnd.Next works later when shuffling questions before return
@@ -187,7 +187,7 @@ namespace MaoriQuiz
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 0, 0));
 
                 case "S":
-                    //these are the questions for the secret difficulty
+                    // these are the questions for the secret difficulty
                     theQuiz = [
                         ("Which of these people helped translate the Treaty of Waitangi? (Triple Point Question!)\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'C', 'D'], 3),
                             ("What year was Aotearoa discovered? (Worth 10 Points!)\nA. ~1750\nB. ~1580\nC. ~1225\nD. ~1280", ['D'], ['A', 'B', 'C', 'D'], 10),
@@ -202,7 +202,7 @@ namespace MaoriQuiz
             }
         }
 
-        //gets the users answer for a question and checks if its correct
+        // gets the users answer for a question and checks if its correct
         static bool AskQuestion(Question questions)
         {
             string userInput;
@@ -219,7 +219,7 @@ namespace MaoriQuiz
             return questions.CorrectAnswers.Contains(char.ToUpper(userInput[0]));
         }
 
-        //returns the amount of points you can possibly get from one quiz
+        // returns the amount of points you can possibly get from one quiz
         static float GetTotalQuizPoints(List<Question> questions)
         {
             float total = 0;
@@ -238,7 +238,7 @@ namespace MaoriQuiz
             GetHighscoreOrZero(scores, 'S') == GetTotalQuizPoints(GetQuizQuestions("S").Item2);
     }
 
-    //class for functions to help with strings
+    // class for functions to help with strings
     public static class StringHelper
     {
         /*
@@ -278,7 +278,7 @@ namespace MaoriQuiz
             }
         }
 
-        //colours text by taking rgb input
+        // colours text by taking rgb input
         public static string RGBIfy(string text, RGBColour col, bool reset = true)
         {
             string resulttext = "\x1b[38;2;" + col.R + ";" + col.G + ";" + col.B + "m" + text;
@@ -289,17 +289,17 @@ namespace MaoriQuiz
             return resulttext;
         }
 
-        //resets formatting, either by outputting reset code or by returning the reset code to something
+        // resets formatting, either by outputting reset code or by returning the reset code to something
         public static string ResetFormatting(bool returnInstead)
         {
             if (returnInstead) return "\e[0m";
             else { Console.Write("\e[0m"); return ""; }
         }
 
-        //checks if name is one word, with no numbers, and is within the length of 1 to 21 characters
+        // checks if name is one word, with no numbers, and is within the length of 1 to 21 characters
         public static bool ValidFirstName(string nameToTest) => Regex.Matches(nameToTest, @"[a-z]{1,21}", RegexOptions.IgnoreCase).Count == 1 && nameToTest.Length == Regex.Matches(nameToTest, @"[a-z]{1,21}", RegexOptions.IgnoreCase)[0].Length;
 
-        //capitalize first letters of words in string, otherwise decapitalizes them (this is to correct wrong capitalization, "mICheal JoRdAN" becomes "Micheal Jordan")
+        // capitalize first letters of words in string, otherwise decapitalizes them (this is to correct wrong capitalization, "mICheal JoRdAN" becomes "Micheal Jordan")
         public static string Capitalize(string stringToCapitalize) => Regex.Replace(Regex.Replace(stringToCapitalize, @"\b[a-z]", delegate (Match match)
             {
                 return match.ToString().ToUpper();
@@ -309,10 +309,10 @@ namespace MaoriQuiz
             });
     }
 
-    //class which is kind of unnecessary, but might be helpful if i make another function to help with consoles
+    // class which is kind of unnecessary, but might be helpful if i make another function to help with consoles
     public static class ConsoleHelper
     {
-        //clears console (do i have to explain)
+        // clears console (do i have to explain)
         public static void ClearFullConsole()
         {
             Console.Clear();
