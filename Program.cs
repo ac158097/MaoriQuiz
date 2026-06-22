@@ -158,7 +158,7 @@ namespace MaoriQuiz
                 // make sure that every possible option is either in the correct answer char list, incorrect answer char list, or both (will count as a correct answer if in both)
                 case "E":
                     theQuiz = [
-                        ("What does kia ora mean?\nA. Hello\nB. Good Morning\nC. Good Night\nD. I'm Hungry", ['A'], ['A', 'B', 'C', 'D'], 1),
+                        ("What does kia ora mean?\nA. Good Morning\nB. Hello\nC. Good Night\nD. I'm Hungry", ['B'], ['A', 'B', 'C', 'D'], 1),
                             ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['A', 'B', 'C', 'D'], 1),
                             ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C', 'D'], 1),
