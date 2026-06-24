@@ -158,41 +158,41 @@ namespace MaoriQuiz
                 // make sure that every possible option is either in the correct answer char list, incorrect answer char list, or both (will count as a correct answer if in both)
                 case "E":
                     theQuiz = [
-                        ("What does kia ora mean?\nA. Good Morning\nB. Hello\nC. Good Night\nD. I'm Hungry", ['B'], ['A', 'B', 'C', 'D'], 1),
-                            ("What is the Maori name for New Zealand?\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'C', 'D'], 1),
-                            ("Who was the prime minister in 2026?\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does ma translate to?\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does kakariki translate to? (Double Point Question!)\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['A', 'B', 'C', 'D'], 2),
+                        ("What does kia ora mean?\e[0m\nA. Good Morning\nB. Hello\nC. Good Night\nD. I'm Hungry", ['B'], ['A', 'B', 'C', 'D'], 1),
+                            ("What is the Maori name for New Zealand?\e[0m\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'C', 'D'], 1),
+                            ("Who was the prime minister in 2026?\e[0m\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does ma translate to?\e[0m\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does kakariki translate to? (Double Point Question!)\e[0m\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['A', 'B', 'C', 'D'], 2),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (0, 255, 0)); // rnd.Next returns a random int32, so .OrderBy sorts the list by which items have the highest numbers assigned to them
 
                 case "M":
                     theQuiz = [
-                        ("What is the capital of New Zealand?\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'B', 'C', 'D'], 1),
-                            ("What is the steepest street in New Zealand?\nA. Harry Street\nB. Third Steet\nC. Baldwin Street\nD. Tuff Street", ['C'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does aroha mean?\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does mahi mean?\nA. Total\nB. Food\nC. Work\nD. Car", ['C'], ['A', 'B', 'C', 'D'], 1),
-                            ("True or False: The Treaty Of Waitangi was signed in 1845? (Double Point Question!)\nT. True\nF. False", ['F'], ['T', 'F'], 2),
+                        ("What is the capital of New Zealand?\e[0m\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'B', 'C', 'D'], 1),
+                            ("What is the steepest street in New Zealand?\e[0m\nA. Harry Street\nB. Third Steet\nC. Baldwin Street\nD. Tuff Street", ['C'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does aroha mean?\e[0m\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does mahi mean?\e[0m\nA. Total\nB. Food\nC. Work\nD. Car", ['C'], ['A', 'B', 'C', 'D'], 1),
+                            ("True or False: The Treaty Of Waitangi was signed in 1845? (Double Point Question!)\e[0m\nT. True\nF. False", ['F'], ['T', 'F'], 2),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 255, 0)); // ditto
 
                 case "H":
                     theQuiz = [
-                        ("Which of these birds is native to New Zealand and is extinct?\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'B', 'C', 'D'], 1),
-                            ("Which of these is a reptile native to New Zealand?\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['C'], ['A', 'B', 'C', 'D'], 1),
-                            ("What is the Maori word for door? (Double Point Question!)\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'B', 'C', 'D'], 2),
-                            ("What is the Maori word for stage?\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does koura translate to?\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does pepa translate to?\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C', 'D'], 1),
+                        ("Which of these birds is native to New Zealand and is extinct?\e[0m\nA. Kiwi\nB. Moa\nC. Emu\nD. Dodo", ['B'], ['A', 'B', 'C', 'D'], 1),
+                            ("Which of these is a reptile native to New Zealand?\e[0m\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['C'], ['A', 'B', 'C', 'D'], 1),
+                            ("What is the Maori word for door? (Double Point Question!)\e[0m\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'B', 'C', 'D'], 2),
+                            ("What is the Maori word for stage?\e[0m\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does koura translate to?\e[0m\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does pepa translate to?\e[0m\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C', 'D'], 1),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 0, 0));
 
                 case "S":
                     // these are the questions for the secret difficulty
                     theQuiz = [
-                        ("Which of these people helped translate the Treaty of Waitangi? (Triple Point Question!)\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'C', 'D'], 3),
-                            ("What year was Aotearoa discovered? (Worth 10 Points!)\nA. ~1750\nB. ~1580\nC. ~1225\nD. ~1280", ['D'], ['A', 'B', 'C', 'D'], 10),
-                            ("What year did google add support for the Maori language? (Worth 6.7 Points!)\nA. 1800\nB. 2008\nC. 2019\nD. 1996", ['B'], ['A', 'B', 'C', 'D'], 6.7),
+                        ("Which of these people helped translate the Treaty of Waitangi? (Triple Point Question!)\e[0m\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'C', 'D'], 3),
+                            ("What year was Aotearoa discovered? (Worth 10 Points!)\e[0m\nA. ~1750\nB. ~1580\nC. ~1225\nD. ~1280", ['D'], ['A', 'B', 'C', 'D'], 10),
+                            ("What year did google add support for the Maori language? (Worth 6.7 Points!)\e[0m\nA. 1800\nB. 2008\nC. 2019\nD. 1996", ['B'], ['A', 'B', 'C', 'D'], 6.7),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (199, 0, 255));
 
@@ -208,7 +208,7 @@ namespace MaoriQuiz
         static bool AskQuestion(Question questions)
         {
             string userInput;
-            Console.WriteLine(questions.QuestionString);
+            Console.WriteLine(StringHelper.Fancify(questions.QuestionString, isUnderline: true));
             do
             {
                 Console.Write($"{StringHelper.RGBIfy("Answer", (91, 217, 210))}: ");
