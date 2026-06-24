@@ -148,7 +148,7 @@ namespace MaoriQuiz
 
 
         // returns quiz questions (will make colour correlated to quiz later)
-        static (char, List<Question>, RGBColour) GetQuizQuestions(string diffi) // diffi is short for difficulty, which in this case is a string supplied by the user, which is check if it is one letter, if it is, then it checks if the letter correlates to a difficulty
+        static (char, List<Question>, RGBColour) GetQuizQuestions(string diffi) // diffi is short for difficulty, which in this case is a string supplied by the user as a string, the string is then checked to see if it correlates to a difficulty, if it is, then it returns the quiz guestions for the difficulty
         {
             var rnd = new Random(); // so that rnd.Next works later when shuffling questions before return
             List<Question> theQuiz = [];
