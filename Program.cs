@@ -3,13 +3,13 @@
 using System.Text.RegularExpressions;
 
 // alias for a very long type
-using Question = (string QuestionString, System.Collections.Generic.List<char> CorrectAnswers, System.Collections.Generic.List<char> IncorrectAnswers, float Points);
+using Question = (string QuestionString, System.Collections.Generic.List<char> CorrectAnswers, System.Collections.Generic.List<char> IncorrectAnswers, double Points);
 //                question,              correct answer chars,                                 incorrect options chars/all option chars,               points awarded for correct answer
 
 // alias for rgb colours, the r, g and b obviously stand for red, green and blue
 // this is used for colouring text with StringHelper.RGBIfy()
 using RGBColour = (int R, int G, int B);
-using Scoredict = System.Collections.Generic.Dictionary<char, float>;
+using Scoredict = System.Collections.Generic.Dictionary<char, double>;
 
 namespace MaoriQuiz
 {
@@ -20,7 +20,7 @@ namespace MaoriQuiz
             // initialize vars
             string name;
             bool isCorrect;
-            float score;
+            double score;
             bool replay = false;
             string replaychoice;
             Scoredict highscores = [];
@@ -45,7 +45,7 @@ namespace MaoriQuiz
             {
                 ConsoleHelper.ClearFullConsole();
                 score = 0;
-                // print difficulties, highscores, and what percent of questions were right from highscore, with rgb colouring
+                // print difficulties, highscores, and what percent of questions were right from highscore, with rgb colouring, and a quit option
                 Console.WriteLine("""
                     {0}
                     Choose a difficulty:
@@ -54,7 +54,7 @@ namespace MaoriQuiz
                     {4}
                     {5}{1}
                     """,
-                    (IsQuizMaster(highscores)) ? $"Congrats, {name}! You have aced every quiz difficulty!" : $"Welcome to the Maori/NZ Quiz, {name}!", // check if user is master of quizes (has every question right on every difficulty), congratulates them if they are, welcomes them if not
+                    (IsQuizMaster(highscores)) ? $"Congrats, {name}! You have aced every quiz difficulty!" : $"Welcome to the Maori/NZ Quiz, {name}!", // check if user is master of quizes (has every question right on every difficulty, including secret), congratulates them if they are, welcomes them if not
                     StringHelper.RGBIfy("Quit [Q]", GetQuizQuestions("Q").Item3, reset: true),
                     StringHelper.RGBIfy($"Easy [E]\t(High Score: {GetHighscoreOrZero(highscores, 'E')}/{GetTotalQuizPoints(GetQuizQuestions("E").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'E') / GetTotalQuizPoints(GetQuizQuestions("E").Item2)) * 100)}% Correct)", GetQuizQuestions("E").Item3, reset: true),
                     StringHelper.RGBIfy($"Medium [M]\t(High Score: {GetHighscoreOrZero(highscores, 'M')}/{GetTotalQuizPoints(GetQuizQuestions("M").Item2)}, {Math.Round((GetHighscoreOrZero(highscores, 'M') / GetTotalQuizPoints(GetQuizQuestions("M").Item2)) * 100)}% Correct)", GetQuizQuestions("M").Item3, reset: true),
@@ -144,7 +144,7 @@ namespace MaoriQuiz
         }
 
         // check dictionary containing high scores per difficulty, if it doesnt contain the difficulty as a key, say that the high scores is 0
-        static float GetHighscoreOrZero(Scoredict scores, char difficulty) => scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
+        static double GetHighscoreOrZero(Scoredict scores, char difficulty) => scores.ContainsKey(difficulty) ? scores[difficulty] : 0;
 
 
         // returns quiz questions (will make colour correlated to quiz later)
@@ -192,6 +192,7 @@ namespace MaoriQuiz
                     theQuiz = [
                         ("Which of these people helped translate the Treaty of Waitangi? (Triple Point Question!)\nA. Mike Tyson\nB. George Washington\nC. Henry Williams\nD. John McDonald", ['C'], ['A', 'B', 'C', 'D'], 3),
                             ("What year was Aotearoa discovered? (Worth 10 Points!)\nA. ~1750\nB. ~1580\nC. ~1225\nD. ~1280", ['D'], ['A', 'B', 'C', 'D'], 10),
+                            ("What year did google add support for the Maori language? (Worth 6.7 Points!)\nA. 1800\nB. 2008\nC. 2019\nD. 1996", ['B'], ['A', 'B', 'C', 'D'], 6.7),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (199, 0, 255));
 
@@ -221,9 +222,9 @@ namespace MaoriQuiz
         }
 
         // returns the amount of points you can possibly get from one quiz
-        static float GetTotalQuizPoints(List<Question> questions)
+        static double GetTotalQuizPoints(List<Question> questions)
         {
-            float total = 0;
+            double total = 0;
             foreach (Question questio in questions)
             {
                 if (questio.Points > 0)
