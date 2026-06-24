@@ -273,15 +273,6 @@ namespace MaoriQuiz
             return $"{formatting}{text}{resetstring}";
         }
 
-        public static void SlowTyper(string inputString, int interval)
-        {
-            foreach (char letter in inputString)
-            {
-                Console.Write(letter);
-                Thread.Sleep(interval);
-            }
-        }
-
         // colours text by taking rgb input
         public static string RGBIfy(string text, RGBColour col, bool reset = true)
         {
