@@ -120,7 +120,7 @@ namespace MaoriQuiz
                     // ask if replaying or not
                     do
                     {
-                        Console.Write($"Would you like to replay [Y/N]?\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
+                        Console.Write($"Would you like to replay? [Y/N]\n{StringHelper.RGBIfy("Option", (91, 217, 210))}: ");
                         replaychoice = Console.ReadLine().Trim().ToUpper();
                         if (replaychoice.Equals("Y"))
                         {
