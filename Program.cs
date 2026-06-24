@@ -169,10 +169,10 @@ namespace MaoriQuiz
                 case "M":
                     theQuiz = [
                         ("What is the capital of New Zealand?\e[0m\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'B', 'C', 'D'], 1),
-                            ("What is the steepest street in New Zealand?\e[0m\nA. Harry Street\nB. Third Steet\nC. Baldwin Street\nD. Tuff Street", ['C'], ['A', 'B', 'C', 'D'], 1),
+                            ("What is the steepest street in New Zealand? (Double Point Question!)\e[0m\nA. Harry Street\nB. Third Steet\nC. Baldwin Street\nD. Tuff Street", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("What does aroha mean?\e[0m\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C', 'D'], 1),
                             ("What does mahi mean?\e[0m\nA. Total\nB. Food\nC. Work\nD. Car", ['C'], ['A', 'B', 'C', 'D'], 1),
-                            ("True or False: The Treaty Of Waitangi was signed in 1845? (Double Point Question!)\e[0m\nT. True\nF. False", ['F'], ['T', 'F'], 2),
+                            ("True or False: The Treaty Of Waitangi was signed in 1845?\e[0m\nT. True\nF. False", ['F'], ['T', 'F'], 2),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 255, 0)); // ditto
 
