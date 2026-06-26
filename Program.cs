@@ -158,11 +158,11 @@ namespace MaoriQuiz
                 // make sure that every possible option is either in the correct answer char list, incorrect answer char list, or both (will count as a correct answer if in both)
                 case "E":
                     theQuiz = [
-                        ("What does kia ora mean?\e[0m\nA. Good Morning\nB. Hello\nC. Good Night\nD. I'm Hungry", ['B'], ['A', 'B', 'C', 'D'], 1),
+                        ("What does \"kia ora\" mean?\e[0m\nA. Good Morning\nB. Hello\nC. Good Night\nD. I'm Hungry", ['B'], ['A', 'B', 'C', 'D'], 1),
                             ("What is the Maori name for New Zealand?\e[0m\nA. Kaitiakitanga\nB. Tawhirimatea\nC. Aotearoa\nD. Whitu", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("Who was the prime minister in 2026?\e[0m\nA. Christopher Luxon\nB. Winston Peters\nC. Martin Luther King Jr.\nD. Joe Biden", ['A'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does ma translate to?\e[0m\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does kakariki translate to?\e[0m (Double Point Question!)\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['A', 'B', 'C', 'D'], 2),
+                            ("What does \"ma\" mean?\e[0m\nA. Black\nB. Father\nC. Mother\nD. White", ['D'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does \"kakariki\" mean?\e[0m (Double Point Question!)\nA. Green\nB. Yellow\nC. Purple\nD. White", ['A'], ['A', 'B', 'C', 'D'], 2),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (0, 255, 0)); // rnd.Next returns a random int32, so .OrderBy sorts the list by which items have the highest numbers assigned to them
 
@@ -170,8 +170,8 @@ namespace MaoriQuiz
                     theQuiz = [
                         ("What is the capital of New Zealand?\e[0m\nA. Christchurch\nB. Wellington\nC. Auckland\nD. Hamilton", ['B'], ['A', 'B', 'C', 'D'], 1),
                             ("What is the steepest street in New Zealand?\e[0m (Double Point Question!)\nA. Harry Street\nB. Third Steet\nC. Baldwin Street\nD. Tuff Street", ['C'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does aroha mean?\e[0m\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does mahi mean?\e[0m\nA. Total\nB. Food\nC. Work\nD. Car", ['C'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does \"aroha\" mean?\e[0m\nA. Good\nB. Terrible\nC. Effort\nD. Love", ['D'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does \"mahi\" mean?\e[0m\nA. Total\nB. Food\nC. Work\nD. Car", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("True or False: The Treaty Of Waitangi was signed in 1845?\e[0m\nT. True\nF. False", ['F'], ['T', 'F'], 2),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 255, 0)); // ditto
@@ -182,8 +182,8 @@ namespace MaoriQuiz
                             ("Which of these is a reptile native to New Zealand?\e[0m\nA. Charlie\nB. Karakia\nC. Tuatara\nD. Aurora Borealis", ['C'], ['A', 'B', 'C', 'D'], 1),
                             ("What is the Maori word for door?\e[0m (Double Point Question!)\nA. Doa\nB. Tatau\nC. Cacao\nD. Matao", ['B'], ['A', 'B', 'C', 'D'], 2),
                             ("What is the Maori word for stage?\e[0m\nA. Atamira\nB. Whitu\nC. Stage\nD. Whare", ['A'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does koura translate to?\e[0m\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'C', 'D'], 1),
-                            ("What does pepa translate to?\e[0m\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does \"koura\" mean?\e[0m\nA. Silver\nB. Yellow\nC. Gold\nD. Tattoo", ['C'], ['A', 'B', 'C', 'D'], 1),
+                            ("What does \"pepa\" means?\e[0m\nA. Pig\nB. Cling\nC. Pepper\nD. Paper", ['D'], ['A', 'B', 'C', 'D'], 1),
                         ];
                     return (char.ToUpper(diffi[0]), [.. theQuiz.OrderBy(item => rnd.Next())], (255, 0, 0));
 
